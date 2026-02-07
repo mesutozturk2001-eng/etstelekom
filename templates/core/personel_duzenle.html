@@ -89,21 +89,33 @@
                         {% endif %}
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.dogum_tarihi.label }} *</label>
+                            {{ form.dogum_tarihi }}
+                            {% if form.dogum_tarihi.errors %}
+                            <div class="error-message">{{ form.dogum_tarihi.errors.0 }}</div>
+                            {% endif %}
+                            {% if not form.dogum_tarihi.value %}
+                            <small class="text-danger">Doğum tarihi zorunludur!</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
                             <label class="form-label">{{ form.ise_giris_tarihi.label }} *</label>
                             {{ form.ise_giris_tarihi }}
                             {% if form.ise_giris_tarihi.errors %}
                             <div class="error-message">{{ form.ise_giris_tarihi.errors.0 }}</div>
                             {% endif %}
                         </div>
-                        <div class="col-md-4">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
                             <label class="form-label">{{ form.izin_hakki.label }}</label>
                             {{ form.izin_hakki }}
                             {% if form.izin_hakki.errors %}
                             <div class="error-message">{{ form.izin_hakki.errors.0 }}</div>
                             {% endif %}
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label">{{ form.kalan_izin.label }}</label>
                             {{ form.kalan_izin }}
                             {% if form.kalan_izin.errors %}

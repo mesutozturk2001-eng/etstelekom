@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import AvansTalebi, Personel, AvansHareketi, IzinTalebi, PROFIL_CHOICES
+from .models import AvansTalebi, Personel, AvansHareketi, IzinTalebi, MasrafTalebi, PROFIL_CHOICES
 
 class AvansTalepForm(forms.ModelForm):
     class Meta:
@@ -21,7 +21,7 @@ class PersonelForm(forms.ModelForm):
     class Meta:
         model = Personel
         # izin_hakki otomatik hesaplanır, elle girilemez
-        fields = ['tc_no', 'telefon', 'pozisyon', 'profil_tipi', 'adres', 'dogum_tarihi', 'ise_giris_tarihi', 'kalan_izin', 'guncel_avans_borcu', 'first_name', 'last_name']
+        fields = ['tc_no', 'telefon', 'pozisyon', 'profil_tipi', 'adres', 'dogum_tarihi', 'ise_giris_tarihi', 'izin_hakki', 'kalan_izin', 'guncel_avans_borcu', 'first_name', 'last_name']
         widgets = {
             'tc_no': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'TC Kimlik No'}),
             'telefon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefon'}),
@@ -30,6 +30,7 @@ class PersonelForm(forms.ModelForm):
             'adres': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Adres', 'rows': 2}),
             'dogum_tarihi': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'ise_giris_tarihi': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'izin_hakki': forms.NumberInput(attrs={'class': 'form-control', 'value': '14'}),
             'kalan_izin': forms.NumberInput(attrs={'class': 'form-control', 'value': '0'}),
             'guncel_avans_borcu': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
         }
@@ -40,8 +41,14 @@ class PersonelForm(forms.ModelForm):
         self.fields['kalan_izin'].required = False
         # Telefon zorunlu değil
         self.fields['telefon'].required = False
-        # Doğum tarihi zorunlu değil
-        self.fields['dogum_tarihi'].required = False
+        # İzin hakkı zorunlu değil
+        self.fields['izin_hakki'].required = False
+    
+    def clean_dogum_tarihi(self):
+        dogum_tarihi = self.cleaned_data.get('dogum_tarihi')
+        if not dogum_tarihi:
+            raise forms.ValidationError("Doğum tarihi zorunludur!")
+        return dogum_tarihi
         
     def clean_tc_no(self):
         tc_no = self.cleaned_data.get('tc_no')
@@ -113,6 +120,36 @@ class IzinTalebiForm(forms.ModelForm):
 class IzinOnayForm(forms.ModelForm):
     class Meta:
         model = IzinTalebi
+        fields = ['durum', 'admin_notu']
+        widgets = {
+            'durum': forms.Select(attrs={'class': 'form-select'}),
+            'admin_notu': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Varsa notunuz'}),
+        }
+
+
+# Masraf Talep Formu (Personel için)
+class MasrafTalepForm(forms.ModelForm):
+    class Meta:
+        model = MasrafTalebi
+        fields = ['miktar', 'aciklama', 'fis_fatura', 'tarih']
+        widgets = {
+            'miktar': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'min': '0.01'}),
+            'aciklama': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Masrafın açıklamasını giriniz'}),
+            'fis_fatura': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
+            'tarih': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Fiş/fatura zorunlu
+        self.fields['fis_fatura'].required = True
+        self.fields['fis_fatura'].label = "Fiş/Fatura Resmi *"
+
+
+# Masraf Onay/Red Formu (Admin için)
+class MasrafOnayForm(forms.ModelForm):
+    class Meta:
+        model = MasrafTalebi
         fields = ['durum', 'admin_notu']
         widgets = {
             'durum': forms.Select(attrs={'class': 'form-select'}),

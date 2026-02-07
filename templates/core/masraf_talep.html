@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Masraf Talebi Oluştur</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                        {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.miktar.label }} *</label>
+                        {{ form.miktar }}
+                        {% if form.miktar.errors %}
+                        <small class="text-danger">{{ form.miktar.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.tarih.label }} *</label>
+                        {{ form.tarih }}
+                        {% if form.tarih.errors %}
+                        <small class="text-danger">{{ form.tarih.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.aciklama.label }} *</label>
+                        {{ form.aciklama }}
+                        {% if form.aciklama.errors %}
+                        <small class="text-danger">{{ form.aciklama.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.fis_fatura.label }}</label>
+                        {{ form.fis_fatura }}
+                        <small class="text-muted">Fiş veya fatura resmi yükleyebilirsiniz (isteğe bağlı)</small>
+                        {% if form.fis_fatura.errors %}
+                        <small class="text-danger">{{ form.fis_fatura.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'masraf_listem' %}" class="btn btn-secondary">İptal</a>
+                        <button type="submit" class="btn btn-success">Talebi Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

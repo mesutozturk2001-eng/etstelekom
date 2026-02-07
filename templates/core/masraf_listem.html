@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Masraf Taleplerim</h2>
+    <a href="{% url 'masraf_talep_et' %}" class="btn btn-primary">+ Yeni Masraf Talebi</a>
+</div>
+
+<!-- Avans Bakiyesi Bilgisi -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h5 class="mb-0">Güncel Avans Bakiyeniz:</h5>
+            </div>
+            <div class="col-md-6 text-end">
+                {% if personel.guncel_avans_borcu > 0 %}
+                <span class="badge bg-danger fs-5">{{ personel.guncel_avans_borcu }} TL Borç</span>
+                {% elif personel.guncel_avans_borcu < 0 %} <span class="badge bg-success fs-5">{{
+                    personel.guncel_avans_borcu|abs }} TL Alacak</span>
+                    {% else %}
+                    <span class="badge bg-secondary fs-5">0 TL (Borç Yok)</span>
+                    {% endif %}
+            </div>
+        </div>
+        <small class="text-muted">
+            <strong>Bilgi:</strong> Eksi (-) değer şirketten alacağınızı, artı (+) değer şirkete borçlu olduğunuzu
+            gösterir.
+        </small>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Miktar</th>
+                        <th>Açıklama</th>
+                        <th>Fiş/Fatura</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for masraf in masraflar %}
+                    <tr>
+                        <td>{{ masraf.tarih }}</td>
+                        <td>{{ masraf.miktar }} TL</td>
+                        <td>{{ masraf.aciklama|truncatechars:50 }}</td>
+                        <td>
+                            {% if masraf.fis_fatura %}
+                            <a href="{{ masraf.fis_fatura.url }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                Görüntüle
+                            </a>
+                            {% else %}
+                            <span class="text-muted">Yok</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if masraf.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">Bekliyor</span>
+                            {% elif masraf.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">Onaylandı</span>
+                            {% else %}
+                            <span class="badge bg-danger">Reddedildi</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'masraf_detay' masraf.id %}"
+                                class="btn btn-sm btn-info text-white">Detay</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Henüz masraf talebiniz bulunmamaktadır.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

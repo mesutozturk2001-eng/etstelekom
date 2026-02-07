@@ -27,6 +27,17 @@ urlpatterns = [
     path('hesapla-gun/', views.hesapla_gun, name='hesapla_gun'),
     path('zimmetlerim/', views.zimmetlerim, name='zimmetlerim'),
     path('egitimlerim/', views.egitimlerim, name='egitimlerim'),
+    # Masraf Talepleri
+    path('masraf-talep/', views.masraf_talep_et, name='masraf_talep_et'),
+    path('masraf-listem/', views.masraf_listem, name='masraf_listem'),
+    path('masraf-listesi/', views.masraf_listesi, name='masraf_yonetim'),
+    path('masraf-detay/<int:talep_id>/', views.masraf_detay, name='masraf_detay'),
+    path('masraf-islem/<int:talep_id>/<str:islem>/', views.masraf_islem, name='masraf_islem'),
+    # Taleplerim (Personel)
+    path('taleplerim/', views.taleplerim, name='taleplerim'),
+    # Talep Yönetim (Admin/Muhasebe/Patron)
+    path('talep-yonetim/', views.talep_yonetim, name='talep_yonetim'),
+    # Auth
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', views.logout_view, name='logout'),
 ]

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header 
+                {% if talep.durum == 'Bekliyor' %}bg-warning
+                {% elif talep.durum == 'Onaylandı' %}bg-success
+                {% else %}bg-danger
+                {% endif %} text-white">
+                <h4 class="mb-0">Masraf Talebi Detayı</h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Personel:</strong><br>
+                        {{ talep.personel.user.get_full_name|upper }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Durum:</strong><br>
+                        {% if talep.durum == 'Bekliyor' %}
+                        <span class="badge bg-warning text-dark">Bekliyor</span>
+                        {% elif talep.durum == 'Onaylandı' %}
+                        <span class="badge bg-success">Onaylandı</span>
+                        {% else %}
+                        <span class="badge bg-danger">Reddedildi</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Masraf Tarihi:</strong><br>
+                        {{ talep.tarih }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Talep Tarihi:</strong><br>
+                        {{ talep.talep_tarihi|date:"d.m.Y H:i" }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Masraf Tutarı:</strong><br>
+                        <span class="fs-4 fw-bold text-primary">{{ talep.miktar }} TL</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Açıklama:</strong><br>
+                    {{ talep.aciklama }}
+                </div>
+
+                {% if talep.fis_fatura %}
+                <div class="mb-3">
+                    <strong>Fiş/Fatura:</strong><br>
+                    <a href="{{ talep.fis_fatura.url }}" target="_blank" class="btn btn-outline-info">
+                        📎 Fiş/Faturayı Görüntüle
+                    </a>
+                </div>
+                {% endif %}
+
+                {% if talep.admin_notu %}
+                <div class="mb-3">
+                    <strong>Admin Notu:</strong><br>
+                    <div class="alert alert-info">{{ talep.admin_notu }}</div>
+                </div>
+                {% endif %}
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Geri Dön</a>
+                    {% if talep.durum == 'Bekliyor' %}
+                    <div>
+                        <a href="{% url 'masraf_islem' talep.id 'onayla' %}" class="btn btn-success"
+                            onclick="return confirm('Bu masraf talebini onaylamak istediğinize emin misiniz?')">
+                            Onayla
+                        </a>
+                        <a href="{% url 'masraf_islem' talep.id 'reddet' %}" class="btn btn-danger"
+                            onclick="return confirm('Bu masraf talebini reddetmek istediğinize emin misiniz?')">
+                            Reddet
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
-from .models import Personel, AvansTalebi, AvansHareketi, IzinTalebi
-from .forms import AvansTalepForm, PersonelForm, ExcelUploadForm, AvansIslemForm, PersonelKendiForm, IzinTalebiForm, IzinOnayForm
+from .models import Personel, AvansTalebi, AvansHareketi, IzinTalebi, MasrafTalebi
+from .forms import AvansTalepForm, PersonelForm, ExcelUploadForm, AvansIslemForm, PersonelKendiForm, IzinTalebiForm, IzinOnayForm, MasrafTalepForm, MasrafOnayForm
 from .models import yillik_izin_hakki_hesapla, calisma_gunleri_hesapla, get_profil_tipi
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -739,3 +739,132 @@ def egitimlerim(request):
     """Personelin egitimlerini goster"""
     personel = get_object_or_404(Personel, user=request.user)
     return render(request, 'core/egitimlerim.html', {'personel': personel})
+
+
+# ==================== MASRAF TALEBI VIEWS ====================
+
+@login_required
+def masraf_talep_et(request):
+    """Personelin masraf talep etmesi"""
+    personel = get_object_or_404(Personel, user=request.user)
+    
+    if request.method == 'POST':
+        form = MasrafTalepForm(request.POST, request.FILES)
+        if form.is_valid():
+            masraf = form.save(commit=False)
+            masraf.personel = personel
+            masraf.save()
+            messages.success(request, 'Masraf talebiniz başarıyla oluşturuldu.')
+            return redirect('masraf_listem')
+    else:
+        form = MasrafTalepForm()
+    
+    return render(request, 'core/masraf_talep.html', {'form': form, 'personel': personel})
+
+
+@login_required
+def masraf_listem(request):
+    """Personelin kendi masraf taleplerini görmesi"""
+    personel = get_object_or_404(Personel, user=request.user)
+    masraflar = MasrafTalebi.objects.filter(personel=personel).order_by('-talep_tarihi')
+    
+    return render(request, 'core/masraf_listem.html', {'masraflar': masraflar, 'personel': personel})
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def masraf_listesi(request):
+    """Admin/Muhasebe/Patron için tüm masraf talepleri"""
+    durum_filter = request.GET.get('durum', '')
+    
+    masraflar = MasrafTalebi.objects.all().order_by('-talep_tarihi')
+    
+    if durum_filter:
+        masraflar = masraflar.filter(durum=durum_filter)
+    
+    return render(request, 'core/masraf_yonetim.html', {'masraflar': masraflar, 'durum_filter': durum_filter})
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def masraf_islem(request, talep_id, islem):
+    """Masraf talebini onayla veya reddet"""
+    talep = get_object_or_404(MasrafTalebi, id=talep_id)
+    
+    if islem == 'onayla':
+        talep.durum = 'Onaylandı'
+        talep.admin_notu = request.GET.get('not', '')
+        talep.save()
+        messages.success(request, f'{talep.personel.user.get_full_name()} için masraf talebi onaylandı.')
+    elif islem == 'reddet':
+        talep.durum = 'Reddedildi'
+        talep.admin_notu = request.GET.get('not', '')
+        talep.save()
+        messages.warning(request, f'{talep.personel.user.get_full_name()} için masraf talebi reddedildi.')
+    
+    return redirect('masraf_yonetim')
+
+
+@login_required
+def masraf_detay(request, talep_id):
+    """Masraf talebi detayı"""
+    talep = get_object_or_404(MasrafTalebi, id=talep_id)
+    
+    # Admin/muhasebe/patron doğrudan görebilir
+    if is_staff(request.user) or is_muhasebe(request.user) or is_patron(request.user):
+        return render(request, 'core/masraf_detay.html', {'talep': talep})
+    
+    # Personel sadece kendi talebini görebilir
+    personel = get_object_or_404(Personel, user=request.user)
+    if talep.personel != personel:
+        messages.error(request, 'Bu talebi görme yetkiniz yok.')
+        return redirect('personel_panel')
+    
+    return render(request, 'core/masraf_detay.html', {'talep': talep, 'personel': personel})
+
+
+@login_required
+def taleplerim(request):
+    """Personelin tüm taleplerini gördüğü sayfa"""
+    personel = get_object_or_404(Personel, user=request.user)
+    
+    # Tüm talepleri getir
+    avans_talepleri = AvansTalebi.objects.filter(personel=personel).order_by('-tarih')
+    izin_talepleri = IzinTalebi.objects.filter(personel=personel).order_by('-talep_tarihi')
+    masraf_talepleri = MasrafTalebi.objects.filter(personel=personel).order_by('-talep_tarihi')
+    
+    context = {
+        'personel': personel,
+        'avans_talepleri': avans_talepleri,
+        'izin_talepleri': izin_talepleri,
+        'masraf_talepleri': masraf_talepleri,
+    }
+    
+    return render(request, 'core/taleplerim.html', context)
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def talep_yonetim(request):
+    """Admin/Muhasebe/Patron için tüm taleplerin yönetim paneli"""
+    # Filtreler
+    tur_filter = request.GET.get('tur', '')
+    durum_filter = request.GET.get('durum', '')
+    
+    # Tüm talepleri getir
+    avans_talepleri = AvansTalebi.objects.all().order_by('-tarih')
+    izin_talepleri = IzinTalebi.objects.all().order_by('-talep_tarihi')
+    masraf_talepleri = MasrafTalebi.objects.all().order_by('-talep_tarihi')
+    
+    # Durum filtresi
+    if durum_filter:
+        avans_talepleri = avans_talepleri.filter(durum=durum_filter)
+        izin_talepleri = izin_talepleri.filter(durum=durum_filter)
+        masraf_talepleri = masraf_talepleri.filter(durum=durum_filter)
+    
+    context = {
+        'avans_talepleri': avans_talepleri,
+        'izin_talepleri': izin_talepleri,
+        'masraf_talepleri': masraf_talepleri,
+        'tur_filter': tur_filter,
+        'durum_filter': durum_filter,
+    }
+    
+    return render(request, 'core/talep_yonetim.html', context)

@@ -107,7 +107,7 @@ class Personel(models.Model):
     pozisyon = models.CharField(max_length=100, blank=True, default='', verbose_name="Pozisyon")
     profil_tipi = models.CharField(max_length=20, choices=PROFIL_CHOICES, default='Personel', verbose_name="Profil Tipi")
     adres = models.TextField(blank=True, default='', verbose_name="Adres")
-    dogum_tarihi = models.DateField(blank=True, null=True, verbose_name="Doğum Tarihi")
+    dogum_tarihi = models.DateField(verbose_name="Doğum Tarihi", null=True, blank=True)
     ise_giris_tarihi = models.DateField(verbose_name="İşe Giriş Tarihi")
     izin_hakki = models.IntegerField(default=14, verbose_name="Yıllık İzin Hakkı")
     kalan_izin = models.IntegerField(default=0, verbose_name="Kalan İzin Günü")
@@ -211,3 +211,37 @@ class IzinTalebi(models.Model):
 
     def __str__(self):
         return f"{self.personel.user.get_full_name()} - {self.baslangic_tarihi} / {self.bitis_tarihi} ({self.gun_sayisi} gün)"
+
+
+class MasrafTalebi(models.Model):
+    DURUM_CHOICES = [
+        ('Bekliyor', 'Bekliyor'),
+        ('Onaylandı', 'Onaylandı'),
+        ('Reddedildi', 'Reddedildi'),
+    ]
+    personel = models.ForeignKey(Personel, on_delete=models.CASCADE)
+    miktar = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Masraf Tutarı (TL)")
+    aciklama = models.TextField(verbose_name="Masraf Açıklaması")
+    fis_fatura = models.ImageField(upload_to='fis_faturalar/', verbose_name="Fiş/Fatura Resmi", blank=True, null=True)
+    tarih = models.DateField(verbose_name="Masraf Tarihi")
+    talep_tarihi = models.DateTimeField(auto_now_add=True, verbose_name="Talep Tarihi")
+    durum = models.CharField(max_length=20, choices=DURUM_CHOICES, default='Bekliyor', verbose_name="Durum")
+    admin_notu = models.TextField(blank=True, verbose_name="Admin Notu")
+    
+    def save(self, *args, **kwargs):
+        # Masraf onaylandığında avans bakiyesini güncelle
+        if self.pk:
+            old_inst = MasrafTalebi.objects.get(pk=self.pk)
+            if old_inst.durum != 'Onaylandı' and self.durum == 'Onaylandı':
+                # Masrafı avans bakiyesinden düş (eksi ise azalt, artı ise artır)
+                self.personel.guncel_avans_borcu -= self.miktar
+                self.personel.save()
+        else:
+            if self.durum == 'Onaylandı':
+                self.personel.guncel_avans_borcu -= self.miktar
+                self.personel.save()
+        
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.personel.user.get_full_name()} - {self.miktar} TL ({self.durum})"

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Talep Yönetimi</h2>
+</div>
+
+<!-- Filtre -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Durum Filtresi</label>
+                <select name="durum" class="form-select">
+                    <option value="">Tümü</option>
+                    <option value="Bekliyor" {% if durum_filter == 'Bekliyor' %}selected{% endif %}>Bekliyor</option>
+                    <option value="Onaylandı" {% if durum_filter == 'Onaylandı' %}selected{% endif %}>Onaylandı</option>
+                    <option value="Reddedildi" {% if durum_filter == 'Reddedildi' %}selected{% endif %}>Reddedildi</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <a href="{% url 'talep_yonetim' %}" class="btn btn-secondary w-100">Temizle</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Masraf Talepleri -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header text-white" style="background-color: #6f42c1;">
+        <h5 class="mb-0">Masraf Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Personel</th>
+                        <th>Tarih</th>
+                        <th>Miktar</th>
+                        <th>Açıklama</th>
+                        <th>Fiş/Fatura</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for masraf in masraf_talepleri %}
+                    <tr>
+                        <td>{{ masraf.personel.user.get_full_name|upper }}</td>
+                        <td>{{ masraf.tarih }}</td>
+                        <td>{{ masraf.miktar }} TL</td>
+                        <td>{{ masraf.aciklama|truncatechars:30 }}</td>
+                        <td>
+                            {% if masraf.fis_fatura %}
+                            <a href="{{ masraf.fis_fatura.url }}" target="_blank" class="btn btn-sm btn-outline-info">Görüntüle</a>
+                            {% else %}
+                            <span class="text-muted">Yok</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if masraf.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">Bekliyor</span>
+                            {% elif masraf.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">Onaylandı</span>
+                            {% else %}
+                            <span class="badge bg-danger">Reddedildi</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if masraf.durum == 'Bekliyor' %}
+                            <a href="{% url 'masraf_islem' masraf.id 'onayla' %}" class="btn btn-sm btn-success" onclick="return confirm('Onaylıyor musunuz?')">Onayla</a>
+                            <a href="{% url 'masraf_islem' masraf.id 'reddet' %}" class="btn btn-sm btn-danger" onclick="return confirm('Reddediyor musunuz?')">Reddet</a>
+                            {% else %}
+                            <a href="{% url 'masraf_detay' masraf.id %}" class="btn btn-sm btn-info text-white">Detay</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-muted py-4">Masraf talebi bulunmuyor.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- İzin Talepleri -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">İzin Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr><th>Personel</th><th>Başlangıç</th><th>Bitiş</th><th>Gün</th><th>Durum</th><th>İşlemler</th></tr>
+                </thead>
+                <tbody>
+                    {% for izin in izin_talepleri %}
+                    <tr>
+                        <td>{{ izin.personel.user.get_full_name|upper }}</td>
+                        <td>{{ izin.baslangic_tarihi|date:"d.m.Y" }}</td>
+                        <td>{{ izin.bitis_tarihi|date:"d.m.Y" }}</td>
+                        <td>{{ izin.gun_sayisi }} gün</td>
+                        <td>
+                            {% if izin.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">Bekliyor</span>
+                            {% elif izin.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">Onaylandı</span>
+                            {% else %}
+                            <span class="badge bg-danger">Reddedildi</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if izin.durum == 'Bekliyor' %}
+                            <a href="{% url 'izin_islem' izin.id 'onayla' %}" class="btn btn-sm btn-success" onclick="return confirm('Onaylıyor musunuz?')">Onayla</a>
+                            <a href="{% url 'izin_islem' izin.id 'reddet' %}" class="btn btn-sm btn-danger" onclick="return confirm('Reddediyor musunuz?')">Reddet</a>
+                            {% else %}
+                            <a href="{% url 'izin_detay' izin.id %}" class="btn btn-sm btn-info text-white">Detay</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center text-muted py-4">İzin talebi bulunmuyor.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Avans Talepleri -->
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Avans Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr><th>Personel</th><th>Tarih</th><th>Miktar</th><th>Açıklama</th><th>Durum</th><th>İşlemler</th></tr>
+                </thead>
+                <tbody>
+                    {% for avans in avans_talepleri %}
+                    <tr>
+                        <td>{{ avans.personel.user.get_full_name|upper }}</td>
+                        <td>{{ avans.tarih }}</td>
+                        <td>{{ avans.miktar }} TL</td>
+                        <td>{{ avans.aciklama|truncatechars:30 }}</td>
+                        <td>
+                            {% if avans.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">Bekliyor</span>
+                            {% elif avans.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">Onaylandı</span>
+                            {% else %}
+                            <span class="badge bg-danger">Reddedildi</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if avans.durum == 'Bekliyor' %}
+                            <a href="{% url 'avans_islem' avans.id 'onayla' %}" class="btn btn-sm btn-success" onclick="return confirm('Onaylıyor musunuz?')">Onayla</a>
+                            <a href="{% url 'avans_islem' avans.id 'reddet' %}" class="btn btn-sm btn-danger" onclick="return confirm('Reddediyor musunuz?')">Reddet</a>
+                            {% else %}
+                            <span class="text-muted">İşlem yapıldı</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center text-muted py-4">Avans talebi bulunmuyor.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

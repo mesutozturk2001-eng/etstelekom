@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Taleplerim</h2>
+</div>
+
+<!-- Özet Kartları -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Avans Talepleri</h5>
+                <h2>{{ avans_talepleri.count }}</h2>
+                <small>Bekleyen: {{ avans_talepleri.filter|length }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">İzin Talepleri</h5>
+                <h2>{{ izin_talepleri.count }}</h2>
+                <small>Bekleyen: {{ izin_talepleri.filter|length }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white" style="background-color: #6f42c1;">
+            <div class="card-body">
+                <h5 class="card-title">Masraf Talepleri</h5>
+                <h2>{{ masraf_talepleri.count }}</h2>
+                <small>Bekleyen: {{ masraf_talepleri.filter|length }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Geçmiş Avans Talepleri -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Geçmiş Avans Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Miktar</th>
+                        <th>Açıklama</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for talep in avans_talepleri %}
+                    <tr>
+                        <td>{{ talep.tarih }}</td>
+                        <td>{{ talep.miktar }} TL</td>
+                        <td>{{ talep.aciklama|truncatechars:40 }}</td>
+                        <td>
+                            {% if talep.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">{{ talep.durum }}</span>
+                            {% elif talep.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">{{ talep.durum }}</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ talep.durum }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">Henüz avans talebiniz bulunmuyor.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Geçmiş İzin Talepleri -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">Geçmiş İzin Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                        <th>Gün</th>
+                        <th>Açıklama</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for izin in izin_talepleri %}
+                    <tr>
+                        <td>{{ izin.baslangic_tarihi|date:"d.m.Y" }}</td>
+                        <td>{{ izin.bitis_tarihi|date:"d.m.Y" }}</td>
+                        <td>{{ izin.gun_sayisi }} gün</td>
+                        <td>{{ izin.aciklama|truncatechars:30 }}</td>
+                        <td>
+                            {% if izin.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">{{ izin.durum }}</span>
+                            {% elif izin.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">{{ izin.durum }}</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ izin.durum }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Henüz izin talebiniz bulunmuyor.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Geçmiş Masraf Talepleri -->
+<div class="card shadow-sm">
+    <div class="card-header text-white" style="background-color: #6f42c1;">
+        <h5 class="mb-0">Geçmiş Masraf Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Miktar</th>
+                        <th>Açıklama</th>
+                        <th>Fiş/Fatura</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for masraf in masraf_talepleri %}
+                    <tr>
+                        <td>{{ masraf.tarih }}</td>
+                        <td>{{ masraf.miktar }} TL</td>
+                        <td>{{ masraf.aciklama|truncatechars:30 }}</td>
+                        <td>
+                            {% if masraf.fis_fatura %}
+                            <a href="{{ masraf.fis_fatura.url }}" target="_blank"
+                                class="btn btn-sm btn-outline-info">Görüntüle</a>
+                            {% else %}
+                            <span class="text-muted">Yok</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if masraf.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">{{ masraf.durum }}</span>
+                            {% elif masraf.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">{{ masraf.durum }}</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ masraf.durum }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'masraf_detay' masraf.id %}"
+                                class="btn btn-sm btn-info text-white">Detay</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">Henüz masraf talebiniz bulunmuyor.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

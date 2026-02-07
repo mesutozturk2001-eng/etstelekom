@@ -2,7 +2,9 @@
 
 {% block content %}
 <div class="row">
+    <!-- SOL TARAF -->
     <div class="col-md-4 mb-4">
+        <!-- Personel Bilgileri -->
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Personel Bilgileri</h5>
@@ -38,8 +40,14 @@
                                 {% endwith %}
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                        <strong>Güncel Avans Borcu:</strong>
-                        <span class="badge bg-danger">{{ personel.guncel_avans_borcu }} TL</span>
+                        <strong>Avans Bakiyesi:</strong>
+                        {% if personel.guncel_avans_borcu > 0 %}
+                        <span class="badge bg-danger">{{ personel.guncel_avans_borcu }} TL Borç</span>
+                        {% elif personel.guncel_avans_borcu < 0 %} <span class="badge bg-success">{{
+                            personel.guncel_avans_borcu|abs }} TL Alacak</span>
+                            {% else %}
+                            <span class="badge bg-secondary">0 TL</span>
+                            {% endif %}
                     </li>
                     <li class="list-group-item text-center">
                         <a href="{% url 'sifre_degistir' %}" class="btn btn-outline-warning btn-sm">Şifre Değiştir</a>
@@ -48,6 +56,7 @@
             </div>
         </div>
 
+        <!-- Bilgilerimi Güncelle -->
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-info text-white">
                 <h5 class="card-title mb-0">Bilgilerimi Güncelle</h5>
@@ -60,9 +69,6 @@
                     <div class="mb-3">
                         <label class="form-label">{{ field.label }}</label>
                         {{ field }}
-                        {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                        {% endif %}
                     </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-info text-white w-100">Güncelle</button>
@@ -70,166 +76,117 @@
             </div>
         </div>
 
+        <!-- Yaklaşan İzinler -->
         <div class="card shadow-sm">
-            <div class="card-header bg-success text-white">
-                <h5 class="card-title mb-0">Yeni İş Avansı Talebi</h5>
-            </div>
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="avans_talep" value="1">
-                    {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label">{{ field.label }}</label>
-                        {{ field }}
-                        {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                    <button type="submit" class="btn btn-success w-100">Talep Gönder</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="card shadow-sm mt-4">
             <div class="card-header bg-secondary text-white">
                 <h5 class="card-title mb-0">Yaklaşan İzinler</h5>
             </div>
             <div class="card-body">
-                <p class="text-muted text-center">Yaklaşan izin bulunmuyor.</p>
+                <p class="text-muted text-center mb-0">Yaklaşan izin bulunmuyor.</p>
             </div>
         </div>
     </div>
 
+    <!-- SAĞ TARAF -->
     <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Geçmiş Avans Talepleri</h5>
+        <!-- Yeni İzin Talebi -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="card-title mb-0">Yeni İzin Talebi</h5>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Tarih</th>
-                                <th>Miktar</th>
-                                <th>Açıklama</th>
-                                <th>Durum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for talep in talepler %}
-                            <tr>
-                                <td>{{ talep.tarih }}</td>
-                                <td>{{ talep.miktar }} TL</td>
-                                <td>{{ talep.aciklama }}</td>
-                                <td>
-                                    {% if talep.durum == 'Bekliyor' %}
-                                    <span class="badge bg-warning text-dark">{{ talep.durum }}</span>
-                                    {% elif talep.durum == 'Onaylandı' %}
-                                    <span class="badge bg-success">{{ talep.durum }}</span>
-                                    {% else %}
-                                    <span class="badge bg-danger">{{ talep.durum }}</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4" class="text-center text-muted">Henüz bir talep bulunmuyor.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                {% if personel.kalan_izin < 0 %} <div class="alert alert-warning mb-3">
+                    <strong>Dikkat!</strong> Mevcut izin hakkınız eksi durumda: <strong>{{ personel.kalan_izin }}
+                        gün</strong>
+            </div>
+            {% else %}
+            <div class="alert alert-info mb-3">
+                <strong>Mevcut İzin Hakkınız:</strong> {{ personel.kalan_izin }} gün
+            </div>
+            {% endif %}
+            <form method="post" action="{% url 'izin_talep_et' %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Başlangıç Tarihi</label>
+                            <input type="date" name="baslangic_tarihi" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Bitiş Tarihi</label>
+                            <input type="date" name="bitis_tarihi" class="form-control" required>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="card shadow-sm mt-4">
-            <div class="card-header bg-secondary">
-                <h5 class="card-title mb-0">Geçmiş İzin Talepleri</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Başlangıç</th>
-                                <th>Bitiş</th>
-                                <th>Gün</th>
-                                <th>Açıklama</th>
-                                <th>Durum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for izin in izin_talepleri %}
-                            <tr>
-                                <td>{{ izin.baslangic_tarihi|date:"d.m.Y" }}</td>
-                                <td>{{ izin.bitis_tarihi|date:"d.m.Y" }}</td>
-                                <td>{{ izin.gun_sayisi }} gün</td>
-                                <td>{{ izin.aciklama|truncatechars:30 }}</td>
-                                <td>
-                                    {% if izin.durum == 'Bekliyor' %}
-                                    <span class="badge bg-warning text-dark">{{ izin.durum }}</span>
-                                    {% elif izin.durum == 'Onaylandı' %}
-                                    <span class="badge bg-success">{{ izin.durum }}</span>
-                                    {% else %}
-                                    <span class="badge bg-danger">{{ izin.durum }}</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">Henüz bir izin talebiniz bulunmuyor.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                <div class="mb-3">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="aciklama" class="form-control" rows="2"
+                        placeholder="İzin sebebini belirtiniz"></textarea>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-warning text-dark w-100">İzin Talep Et</button>
+            </form>
         </div>
     </div>
 
-    <!-- IZIN TALEBI FORMU -->
-    <div class="card shadow-sm mt-4">
-        <div class="card-header bg-warning text-dark">
-            <h5 class="card-title mb-0">Yeni İzin Talebi</h5>
+    <!-- Yeni Masraf Talebi -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white" style="background-color: #6f42c1;">
+            <h5 class="card-title mb-0">Yeni Masraf Talebi</h5>
         </div>
         <div class="card-body">
-            {% if personel.kalan_izin < 0 %} <div class="alert alert-warning mb-3">
-                <strong>Dikkat!</strong> Mevcut izin hakkınız eksi durumda: <strong>{{ personel.kalan_izin }}
-                    gün</strong>
-        </div>
-        {% else %}
-        <div class="alert alert-info mb-3">
-            <strong>Mevcut İzin Hakkınız:</strong> {{ personel.kalan_izin }} gün
-        </div>
-        {% endif %}
-        <form method="post" action="{% url 'izin_talep_et' %}">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">Başlangıç Tarihi</label>
-                        <input type="date" name="baslangic_tarihi" class="form-control" required>
+            <form method="post" action="{% url 'masraf_talep_et' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Masraf Tutarı (TL) *</label>
+                            <input type="number" name="miktar" class="form-control" step="0.01" min="0.01" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Masraf Tarihi *</label>
+                            <input type="date" name="tarih" class="form-control" required>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">Bitiş Tarihi</label>
-                        <input type="date" name="bitis_tarihi" class="form-control" required>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Açıklama *</label>
+                    <textarea name="aciklama" class="form-control" rows="2" placeholder="Masrafın açıklamasını giriniz"
+                        required></textarea>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Açıklama</label>
-                <textarea name="aciklama" class="form-control" rows="3"
-                    placeholder="İzin sebebini belirtiniz"></textarea>
-            </div>
-            <button type="submit" class="btn btn-warning text-dark w-100">İzin Talep Et</button>
-        </form>
+                <div class="mb-3">
+                    <label class="form-label">Fiş/Fatura Resmi * (Zorunlu)</label>
+                    <input type="file" name="fis_fatura" class="form-control" accept="image/*" required>
+                    <small class="text-muted">Fiş veya fatura resmi yüklemeniz zorunludur.</small>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" style="background-color: #6f42c1;">Masraf Talep
+                    Et</button>
+            </form>
+        </div>
     </div>
-</div>
+
+    <!-- Yeni İş Avansı Talebi -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h5 class="card-title mb-0">Yeni İş Avansı Talebi</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="avans_talep" value="1">
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-success w-100">Talep Gönder</button>
+            </form>
+        </div>
+    </div>
 </div>
 </div>
 {% endblock %}
