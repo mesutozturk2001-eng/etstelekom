@@ -1,806 +1,1472 @@
 [
-    {
-        "model": "core.personel",
-        "pk": 1,
-        "fields": {
-            "user": 2,
-            "tc_no": "21334531800",
-            "telefon": "5551234342",
-            "pozisyon": "Muhasebe",
-            "profil_tipi": "Muhasebe",
-            "adres": "aaaasa",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": -2,
-            "guncel_avans_borcu": "4500.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 2,
-        "fields": {
-            "user": 3,
-            "tc_no": "12345678901",
-            "telefon": "05551234567",
-            "pozisyon": "Patron",
-            "profil_tipi": "Patron",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 5,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 3,
-        "fields": {
-            "user": 4,
-            "tc_no": "21677447806",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "asdasddsad",
-            "dogum_tarihi": "1985-11-11",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "-6000.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 4,
-        "fields": {
-            "user": 5,
-            "tc_no": "12001242686",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 5,
-        "fields": {
-            "user": 6,
-            "tc_no": "44020144818",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 6,
-        "fields": {
-            "user": 7,
-            "tc_no": "52408510308",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 7,
-        "fields": {
-            "user": 8,
-            "tc_no": "40819300274",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 8,
-        "fields": {
-            "user": 9,
-            "tc_no": "37963503118",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 15,
-        "fields": {
-            "user": 16,
-            "tc_no": "11111111112",
-            "telefon": null,
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "asd",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2026-02-02",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 16,
-        "fields": {
-            "user": 17,
-            "tc_no": "12338707032",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": null,
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 17,
-        "fields": {
-            "user": 18,
-            "tc_no": "10987654321",
-            "telefon": "05559876543",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1995-06-20",
-            "ise_giris_tarihi": "2021-03-15",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 18,
-        "fields": {
-            "user": 19,
-            "tc_no": "10957093352",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 19,
-        "fields": {
-            "user": 20,
-            "tc_no": "34768806406",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 20,
-        "fields": {
-            "user": 21,
-            "tc_no": "35131248502",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 21,
-        "fields": {
-            "user": 22,
-            "tc_no": "13390220460",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 22,
-        "fields": {
-            "user": 23,
-            "tc_no": "49120527684",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 23,
-        "fields": {
-            "user": 24,
-            "tc_no": "37453520144",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 24,
-        "fields": {
-            "user": 25,
-            "tc_no": "18046051634",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 25,
-        "fields": {
-            "user": 26,
-            "tc_no": "12616196596",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 26,
-        "fields": {
-            "user": 27,
-            "tc_no": "13117005288",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 27,
-        "fields": {
-            "user": 28,
-            "tc_no": "42821084548",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 28,
-        "fields": {
-            "user": 29,
-            "tc_no": "13601586460",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 29,
-        "fields": {
-            "user": 30,
-            "tc_no": "31463148190",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 30,
-        "fields": {
-            "user": 31,
-            "tc_no": "42710079662",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 31,
-        "fields": {
-            "user": 32,
-            "tc_no": "18976755930",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-02-07",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 32,
-        "fields": {
-            "user": 33,
-            "tc_no": "56959568474",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 33,
-        "fields": {
-            "user": 34,
-            "tc_no": "56797143888",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-02-07",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 34,
-        "fields": {
-            "user": 35,
-            "tc_no": "61063499378",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 35,
-        "fields": {
-            "user": 36,
-            "tc_no": "10666157192",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 36,
-        "fields": {
-            "user": 37,
-            "tc_no": "57934519788",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 37,
-        "fields": {
-            "user": 38,
-            "tc_no": "10273231896",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-02-07",
-            "izin_hakki": 14,
-            "kalan_izin": 14,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 38,
-        "fields": {
-            "user": 39,
-            "tc_no": "13390014618",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 39,
-        "fields": {
-            "user": 40,
-            "tc_no": "10816260598",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 40,
-        "fields": {
-            "user": 41,
-            "tc_no": "28436451654",
-            "telefon": "05551234567",
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1990-01-01",
-            "ise_giris_tarihi": "2025-08-01",
-            "izin_hakki": 0,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.personel",
-        "pk": 41,
-        "fields": {
-            "user": 43,
-            "tc_no": "11111111113",
-            "telefon": null,
-            "pozisyon": "",
-            "profil_tipi": "Personel",
-            "adres": "",
-            "dogum_tarihi": "1988-06-15",
-            "ise_giris_tarihi": "2025-01-04",
-            "izin_hakki": 14,
-            "kalan_izin": 0,
-            "guncel_avans_borcu": "0.00"
-        }
-    },
-    {
-        "model": "core.avanstalebi",
-        "pk": 1,
-        "fields": {
-            "personel": 1,
-            "miktar": "3500.00",
-            "tarih": "2026-02-09",
-            "aciklama": "Fatura ödeme",
-            "durum": "Onaylandi"
-        }
-    },
-    {
-        "model": "core.avanstalebi",
-        "pk": 2,
-        "fields": {
-            "personel": 3,
-            "miktar": "2500.00",
-            "tarih": "2026-02-07",
-            "aciklama": "canım istedi",
-            "durum": "Onaylandı"
-        }
-    },
-    {
-        "model": "core.avanstalebi",
-        "pk": 3,
-        "fields": {
-            "personel": 1,
-            "miktar": "1000.00",
-            "tarih": "2026-02-11",
-            "aciklama": "asd",
-            "durum": "Bekliyor"
-        }
-    },
-    {
-        "model": "core.avanshareketi",
-        "pk": 1,
-        "fields": {
-            "personel": 1,
-            "tarih": "2026-02-06T15:55:02.937Z",
-            "hareket_turu": "ODEME",
-            "miktar": "1000.00",
-            "onceki_borc": "0.00",
-            "yeni_borc": "1000.00",
-            "aciklama": "Zonguldak ziyaret"
-        }
-    },
-    {
-        "model": "core.avanshareketi",
-        "pk": 2,
-        "fields": {
-            "personel": 1,
-            "tarih": "2026-02-06T18:25:41.265Z",
-            "hareket_turu": "TALEP",
-            "miktar": "3500.00",
-            "onceki_borc": "1000.00",
-            "yeni_borc": "1000.00",
-            "aciklama": "Fatura ödeme"
-        }
-    },
-    {
-        "model": "core.avanshareketi",
-        "pk": 3,
-        "fields": {
-            "personel": 3,
-            "tarih": "2026-02-06T19:02:49.347Z",
-            "hareket_turu": "TALEP",
-            "miktar": "2500.00",
-            "onceki_borc": "0.00",
-            "yeni_borc": "0.00",
-            "aciklama": "canım istedi"
-        }
-    },
-    {
-        "model": "core.avanshareketi",
-        "pk": 4,
-        "fields": {
-            "personel": 3,
-            "tarih": "2026-02-06T19:43:34.095Z",
-            "hareket_turu": "ODEME",
-            "miktar": "2500.00",
-            "onceki_borc": "0.00",
-            "yeni_borc": "2500.00",
-            "aciklama": "Avans talebi onaylandı: 2500.00 TL"
-        }
-    },
-    {
-        "model": "core.avanshareketi",
-        "pk": 5,
-        "fields": {
-            "personel": 1,
-            "tarih": "2026-02-06T21:16:41.251Z",
-            "hareket_turu": "TALEP",
-            "miktar": "1000.00",
-            "onceki_borc": "1000.00",
-            "yeni_borc": "1000.00",
-            "aciklama": "asd"
-        }
-    },
-    {
-        "model": "core.avanshareketi",
-        "pk": 6,
-        "fields": {
-            "personel": 1,
-            "tarih": "2026-02-06T21:31:44.982Z",
-            "hareket_turu": "ODEME",
-            "miktar": "3500.00",
-            "onceki_borc": "1000.00",
-            "yeni_borc": "4500.00",
-            "aciklama": "Avans talebi onaylandi: 3500.00 TL"
-        }
-    },
-    {
-        "model": "core.izintalebi",
-        "pk": 1,
-        "fields": {
-            "personel": 1,
-            "baslangic_tarihi": "2026-02-01",
-            "bitis_tarihi": "2026-02-03",
-            "gun_sayisi": 2,
-            "aciklama": "",
-            "durum": "Onaylandı",
-            "talep_tarihi": "2026-02-06T18:25:10.428Z",
-            "admin_notu": ""
-        }
-    },
-    {
-        "model": "core.izintalebi",
-        "pk": 2,
-        "fields": {
-            "personel": 1,
-            "baslangic_tarihi": "2026-02-11",
-            "bitis_tarihi": "2026-02-14",
-            "gun_sayisi": 4,
-            "aciklama": "tatil",
-            "durum": "Onaylandi",
-            "talep_tarihi": "2026-02-06T20:15:55.312Z",
-            "admin_notu": ""
-        }
-    },
-    {
-        "model": "core.izintalebi",
-        "pk": 3,
-        "fields": {
-            "personel": 1,
-            "baslangic_tarihi": "2026-02-08",
-            "bitis_tarihi": "2026-02-10",
-            "gun_sayisi": 2,
-            "aciklama": "asd",
-            "durum": "Bekliyor",
-            "talep_tarihi": "2026-02-06T21:16:52.223Z",
-            "admin_notu": ""
-        }
-    },
-    {
-        "model": "core.izintalebi",
-        "pk": 4,
-        "fields": {
-            "personel": 1,
-            "baslangic_tarihi": "2026-02-04",
-            "bitis_tarihi": "2026-02-12",
-            "gun_sayisi": 8,
-            "aciklama": "asdasdasd",
-            "durum": "Bekliyor",
-            "talep_tarihi": "2026-02-06T21:18:39.971Z",
-            "admin_notu": ""
-        }
-    },
-    {
-        "model": "core.izintalebi",
-        "pk": 5,
-        "fields": {
-            "personel": 1,
-            "baslangic_tarihi": "2026-02-18",
-            "bitis_tarihi": "2026-02-19",
-            "gun_sayisi": 2,
-            "aciklama": "ada",
-            "durum": "Bekliyor",
-            "talep_tarihi": "2026-02-06T21:32:53.160Z",
-            "admin_notu": ""
-        }
-    },
-    {
-        "model": "core.masraftalebi",
-        "pk": 1,
-        "fields": {
-            "personel": 3,
-            "miktar": "1000.00",
-            "aciklama": "bilmem ne sebebiyle alım yapıldı",
-            "fis_fatura": "fis_faturalar/logo3.png",
-            "tarih": "2026-02-05",
-            "talep_tarihi": "2026-02-07T19:53:02.448Z",
-            "durum": "Onaylandı",
-            "admin_notu": ""
-        }
-    },
-    {
-        "model": "core.masraftalebi",
-        "pk": 2,
-        "fields": {
-            "personel": 3,
-            "miktar": "10000.00",
-            "aciklama": "asdasd",
-            "fis_fatura": "fis_faturalar/logo2.png",
-            "tarih": "2026-02-04",
-            "talep_tarihi": "2026-02-07T19:53:55.030Z",
-            "durum": "Onaylandı",
-            "admin_notu": ""
-        }
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$fByVTyNgR4ZYv0FBLZH9Ym$xeVj+pByNfOoVhdNwx5/j9VKh9TSB7mcDQ0GV9PEYmo=",
+        "last_login": "2026-02-06T22:30:02.578Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@example.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-02-06T15:31:12.630Z",
+        "groups": [],
+        "user_permissions": []
     }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$WmLe9nDiGBWkySiITDwpGt$D3+GenXnO+L4kr6Ayw6dyd7pg16MU8+1qa/AC4/rECc=",
+        "last_login": "2026-02-07T19:54:34.603Z",
+        "is_superuser": false,
+        "username": "21334531800",
+        "first_name": "Ahmet",
+        "last_name": "Bayri",
+        "email": "ahmet.bayri@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T15:36:37.384Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$0T4DQkqS4hdMWQGO7fUvgG$R9Hiif2KS6egXULxsNr93YTPEBnqAUh92N9r1DGVTBY=",
+        "last_login": "2026-02-06T22:17:36.649Z",
+        "is_superuser": false,
+        "username": "12345678901",
+        "first_name": "Ahmet",
+        "last_name": "Yılmaz",
+        "email": "ahmet.yilmaz@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:00.228Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$LrhESpRDSE2SWame1VkUk0$pNSoIkHGKUcZmev4SfrLtVgQXnA/A8d/77aeXCzndi8=",
+        "last_login": "2026-02-07T20:08:50.572Z",
+        "is_superuser": false,
+        "username": "21677447806",
+        "first_name": "EBRU",
+        "last_name": "İLMAZ",
+        "email": "ebru.i̇lmaz@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:02.029Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$geOEyrtK9Dm61mjYDp4A4K$InBtBrTeeEn0sV0OOoWdg6G6RU+20NdPa18c5IIkvdE=",
+        "last_login": "2026-02-06T22:25:48.335Z",
+        "is_superuser": false,
+        "username": "12001242686",
+        "first_name": "EFE",
+        "last_name": "ULUYOL",
+        "email": "efe.uluyol@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:03.827Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$ZgvXXF18rMTTtAu2ZbIkhL$GdzHI5JOEYIPKdyOsxSIASckKUTY7+aA8hChzVtqEoQ=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "44020144818",
+        "first_name": "EMRE",
+        "last_name": "DAL",
+        "email": "emre.dal@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:05.736Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$1JyuP7fZNRDqurf6UXNxVG$7EDkX+JlNVrPZNyuFKti/QQlNid/RQ3X4p2VLFCf9L4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "52408510308",
+        "first_name": "ERSAN",
+        "last_name": "BALLIKAYA",
+        "email": "ersan.ballıkaya@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:07.586Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$zhD8zuwLtmTDiIFFXBHRPA$UVzkQWP2EAJOWGOWeIXq2/cCkOl8rqLPWR00IprMnNI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "40819300274",
+        "first_name": "ERTUĞRUL",
+        "last_name": "YOSMAOĞLU",
+        "email": "ertuğrul.yosmaoğlu@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:09.248Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$6Pij2dHf8cYjjRY05b1FHi$iPk2cGQ5vyTZ2gSWU9jl6BS8B50yeeNQuCPuniMEY8o=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "37963503118",
+        "first_name": "EVREN",
+        "last_name": "DEMİRTAŞ",
+        "email": "evren.demirtaş@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T16:04:10.963Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 16,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$ex1FsEN6cJQgkZOriCxFlw$dbO+Cj6yF/T5E6tsP1R/eXgrxVgbFAO/d2Oyzn6t+B4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "11111111112",
+        "first_name": "asdasd",
+        "last_name": "sdasdasd",
+        "email": "asdasd.sdasdasd@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T21:53:26.041Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 17,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$3lDOczyve4rxv9Ph2bLc3f$Uz6uHJ8YNRQJVqCfpqvt1NDjmS8L/1ZBNbmBdak6SQc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "12338707032",
+        "first_name": "Ahmet",
+        "last_name": "mehmet",
+        "email": "eyyüp.aktaş@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T21:56:30.181Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 18,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$u1B14guUi6A45mh2tj244F$D2dKuQ/TRAW53gK2CsTMjo/Zl708gt54WIXiGpkjtrU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "10987654321",
+        "first_name": "Ayse",
+        "last_name": "Demir",
+        "email": "ayse.demir@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:18.257Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 19,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$UN57AJlvCef0WzxHTIPXnJ$ovIhZjt+7dTJFtgSY7ZDb9rLmizWvO7JiR2yMEX9p9I=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "10957093352",
+        "first_name": "LEVENT",
+        "last_name": "UÇAR",
+        "email": "levent.ucar@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:20.006Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 20,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$B2i41btw3SzyLIOpiWqjmB$1GpJiwN1TI+pLDxTWcEYEfbCI+V6YpS56+2kQ4SOsMc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "34768806406",
+        "first_name": "MEHMET",
+        "last_name": "ÇİNİTAŞ",
+        "email": "mehmet.ci̇ni̇tas@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:21.333Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 21,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$YMWQZzlLmTFW19XUAKicZ2$jrQaYhwcBn2Vf7Q3ooQCFGvuQr+goxGi+DsVwyxP5K8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "35131248502",
+        "first_name": "MEHMET",
+        "last_name": "KURT",
+        "email": "mehmet.kurt@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:22.666Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 22,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$HGuCprAA8NL0uboGRauq18$Nyjnj3pwtakb1IAROQhdD6InvEsnQGIkD+kjA/zBxWE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "13390220460",
+        "first_name": "MEHMET",
+        "last_name": "SÜZER",
+        "email": "mehmet.suzer@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:24.203Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 23,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$8Ph2gB1rt39fwjRcGiqv7c$MNQ3UUdQkioqCLVBZ3G1F2b17BkTHKCoz3bcDDEk0Gc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "49120527684",
+        "first_name": "MEHMET",
+        "last_name": "ULUYOL",
+        "email": "mehmet.uluyol@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:25.829Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 24,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$DUMZKtCmcOoTRWchHXNcm9$pMqm3UI4AnlkaW6grCBWQw8yo47bRn6HeLZkiCm0FqA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "37453520144",
+        "first_name": "MEHMET",
+        "last_name": "KOÇ",
+        "email": "mehmet.koc@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:27.538Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 25,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$oSiDxWMYTTllbJKvvpU39W$8Y6X9S8/Yks4ToI9fccJeOhFO2SEA3Lxyo0o4yzJ3qA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "18046051634",
+        "first_name": "MELİS",
+        "last_name": "DİNÇ",
+        "email": "meli̇s.di̇nc@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:28.860Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 26,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$OWjYtI3SoCn6NHCo5MNHDv$JZXnHMcdbRyfUezIAnd/Wjzvouz78TlWcRJFgYiVFZ8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "12616196596",
+        "first_name": "MERT",
+        "last_name": "ÖZENÇ",
+        "email": "mert.ozenc@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:30.395Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 27,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$9ZBvoyQkCY3NvUkXGrCF1P$brzOXmGi9scMrr+EebLvRZ9I411HAhxZhA3P3WvS6nc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "13117005288",
+        "first_name": "AMMED",
+        "last_name": "KARPUZ",
+        "email": "ammed.karpuz@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:31.867Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 28,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$aMhfkdKS8LRpufuEGudiTC$KYciPYcgiBvOxR5uu6/iu6RatYO7TJjqWZSbnFgQSwI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "42821084548",
+        "first_name": "MURAT",
+        "last_name": "AYDIN",
+        "email": "murat.aydin@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:33.287Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 29,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$QvkLkmOw4KQPQ8iQSeMR3b$Yt8oulvWZ4CZx57yNsfvVzUp2+uOCujtQGPBBmB82t4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "13601586460",
+        "first_name": "MURAT",
+        "last_name": "ŞAHİN",
+        "email": "murat.sahi̇n@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:34.471Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 30,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$GjQtM0lrlOoyvWZgfc2z3y$k0jiTvUaYDC1y+wSUWxoki6Tff41u100UbB1hoJR6sY=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "31463148190",
+        "first_name": "MUSTAFA",
+        "last_name": "BİÇİCİ",
+        "email": "mustafa.bi̇ci̇ci̇@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:35.881Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 31,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$8iiYmMwYPLbHAE4J7dYqOA$uO9KKvMMhNcz0HN0qhhyOjTztHeXtUYaFlgJvo9fnJE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "42710079662",
+        "first_name": "MÜCAHİT",
+        "last_name": "BAKAR",
+        "email": "mucahi̇t.bakar@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:37.441Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 32,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$yK7KMuI3MeRk5hlGyHiKJL$z0z6KWDrThCwXAjblozaTmj3RTTr5241cu5a3eriVnI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "18976755930",
+        "first_name": "MÜCAHİT",
+        "last_name": "KARAYANIK",
+        "email": "mucahi̇t.karayanik@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:38.702Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 33,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$Mu1jj6qKEb8xgd1CIQIc8P$utiOkjxJSLkCdt00HGOWt/wDkG09vnxqlKCRvHr6zQg=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "56959568474",
+        "first_name": "NEVZAT",
+        "last_name": "AKKAYA",
+        "email": "nevzat.akkaya@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:40.142Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 34,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$45hKjOz6JCpUPqvYfvaZG6$HqsBNsgA7Ig6yXRN3AYUsUD3DMdS7sbgIKxIC71ugR4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "56797143888",
+        "first_name": "OĞUZ",
+        "last_name": "ATAK",
+        "email": "oguz.atak@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:41.482Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 35,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$W23vtxgsC4wSl2Ct3KsO8F$5vaweO2ZapqrhxURR5ghwnEE+CUM7UY/UVoFi+TX6R0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "61063499378",
+        "first_name": "OSMAN",
+        "last_name": "BEKTAŞ",
+        "email": "osman.bektas@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:43.219Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 36,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$1EXUHaJlESzypurVWogepg$v9PICNeMDrR7PmYqYlvR15t0n+nQ0kjVfFvtUfDgfDo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "10666157192",
+        "first_name": "OSMAN",
+        "last_name": "YAVUZ",
+        "email": "osman.yavuz@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:44.763Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 37,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$eulSRiBFmzVvvl5zfJdxk5$qLnmLUFbFsL9DmDGSadQ0U0U3p7BM5rLm7cS/pz6W0U=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "57934519788",
+        "first_name": "OSMAN",
+        "last_name": "YÜKSEL",
+        "email": "osman.yuksel@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:46.003Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 38,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$TpQ0d1msgjIE9LPY1eD23z$Ma2oAEfHWjjrG+fQ4G9ydqsC19H3c8jmGVc1ZSAvu50=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "10273231896",
+        "first_name": "OZAN",
+        "last_name": "ARDAHAN",
+        "email": "ozan.ardahan@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:47.307Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 39,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$AwZgIi0nTLm6jw4UCwwziR$hyYPMfS+heYAjbB1T1YMMa45gDNpIdXvzyMEiJWum0A=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "13390014618",
+        "first_name": "ÖMER",
+        "last_name": "UMUL",
+        "email": "omer.umul@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:49.077Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 40,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$u3AAgES4VJNcPraJUiCnyC$Xdew3e2R3mTD6O14nXcQGPduXzKXwQH5t7muljM6uPk=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "10816260598",
+        "first_name": "ÖMER",
+        "last_name": "YILDIRIM",
+        "email": "omer.yildirim@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:50.747Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 41,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$Avg5Uq2CP19fmiHcPubJg5$RzScArXS7wBJWIeWi3A6WFdv8LGNfBW4VYud1m9+DqE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "28436451654",
+        "first_name": "ÖZNUR",
+        "last_name": "BAYRAK",
+        "email": "oznur.bayrak@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:08:52.284Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 42,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$setshNrKbVIiPYGYLgmc2r$NisKitTF4aXSK4xJXIAFIdhoqpu7ZHSSHsOW2XduF3Q=",
+        "last_login": "2026-02-07T20:16:24.336Z",
+        "is_superuser": true,
+        "username": "superfulim",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-02-06T22:32:11.249Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 43,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$nH4DgmA9rOhU3GIvobsuc9$i4XG4BWE0dFDLQ6cjKa32cD1/yvsHHYfKfkxh6NIS8g=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "11111111113",
+        "first_name": "asdli",
+        "last_name": "dalis",
+        "email": "asdli.dalis@ets-telekom.com.tr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-07T19:17:40.492Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "tc_no": "21334531800",
+        "telefon": "5551234342",
+        "pozisyon": "Muhasebe",
+        "profil_tipi": "Muhasebe",
+        "adres": "aaaasa",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": -2,
+        "guncel_avans_borcu": "4500.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "tc_no": "12345678901",
+        "telefon": "05551234567",
+        "pozisyon": "Patron",
+        "profil_tipi": "Patron",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 5,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 3,
+    "fields": {
+        "user": 4,
+        "tc_no": "21677447806",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "asdasddsad",
+        "dogum_tarihi": "1985-11-11",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "-6000.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 4,
+    "fields": {
+        "user": 5,
+        "tc_no": "12001242686",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 5,
+    "fields": {
+        "user": 6,
+        "tc_no": "44020144818",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 6,
+    "fields": {
+        "user": 7,
+        "tc_no": "52408510308",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 7,
+    "fields": {
+        "user": 8,
+        "tc_no": "40819300274",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 8,
+    "fields": {
+        "user": 9,
+        "tc_no": "37963503118",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 15,
+    "fields": {
+        "user": 16,
+        "tc_no": "11111111112",
+        "telefon": null,
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "asd",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2026-02-02",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 16,
+    "fields": {
+        "user": 17,
+        "tc_no": "12338707032",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": null,
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 17,
+    "fields": {
+        "user": 18,
+        "tc_no": "10987654321",
+        "telefon": "05559876543",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1995-06-20",
+        "ise_giris_tarihi": "2021-03-15",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 18,
+    "fields": {
+        "user": 19,
+        "tc_no": "10957093352",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 19,
+    "fields": {
+        "user": 20,
+        "tc_no": "34768806406",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 20,
+    "fields": {
+        "user": 21,
+        "tc_no": "35131248502",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 21,
+    "fields": {
+        "user": 22,
+        "tc_no": "13390220460",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 22,
+    "fields": {
+        "user": 23,
+        "tc_no": "49120527684",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 23,
+    "fields": {
+        "user": 24,
+        "tc_no": "37453520144",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 24,
+    "fields": {
+        "user": 25,
+        "tc_no": "18046051634",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 25,
+    "fields": {
+        "user": 26,
+        "tc_no": "12616196596",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 26,
+    "fields": {
+        "user": 27,
+        "tc_no": "13117005288",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 27,
+    "fields": {
+        "user": 28,
+        "tc_no": "42821084548",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 28,
+    "fields": {
+        "user": 29,
+        "tc_no": "13601586460",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 29,
+    "fields": {
+        "user": 30,
+        "tc_no": "31463148190",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 30,
+    "fields": {
+        "user": 31,
+        "tc_no": "42710079662",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 31,
+    "fields": {
+        "user": 32,
+        "tc_no": "18976755930",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-02-07",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 32,
+    "fields": {
+        "user": 33,
+        "tc_no": "56959568474",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 33,
+    "fields": {
+        "user": 34,
+        "tc_no": "56797143888",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-02-07",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 34,
+    "fields": {
+        "user": 35,
+        "tc_no": "61063499378",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 35,
+    "fields": {
+        "user": 36,
+        "tc_no": "10666157192",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 36,
+    "fields": {
+        "user": 37,
+        "tc_no": "57934519788",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 37,
+    "fields": {
+        "user": 38,
+        "tc_no": "10273231896",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-02-07",
+        "izin_hakki": 14,
+        "kalan_izin": 14,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 38,
+    "fields": {
+        "user": 39,
+        "tc_no": "13390014618",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 39,
+    "fields": {
+        "user": 40,
+        "tc_no": "10816260598",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 40,
+    "fields": {
+        "user": 41,
+        "tc_no": "28436451654",
+        "telefon": "05551234567",
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1990-01-01",
+        "ise_giris_tarihi": "2025-08-01",
+        "izin_hakki": 0,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.personel",
+    "pk": 41,
+    "fields": {
+        "user": 43,
+        "tc_no": "11111111113",
+        "telefon": null,
+        "pozisyon": "",
+        "profil_tipi": "Personel",
+        "adres": "",
+        "dogum_tarihi": "1988-06-15",
+        "ise_giris_tarihi": "2025-01-04",
+        "izin_hakki": 14,
+        "kalan_izin": 0,
+        "guncel_avans_borcu": "0.00"
+    }
+},
+{
+    "model": "core.avanstalebi",
+    "pk": 1,
+    "fields": {
+        "personel": 1,
+        "miktar": "3500.00",
+        "tarih": "2026-02-09",
+        "aciklama": "Fatura ödeme",
+        "durum": "Onaylandi"
+    }
+},
+{
+    "model": "core.avanstalebi",
+    "pk": 2,
+    "fields": {
+        "personel": 3,
+        "miktar": "2500.00",
+        "tarih": "2026-02-07",
+        "aciklama": "canım istedi",
+        "durum": "Onaylandı"
+    }
+},
+{
+    "model": "core.avanstalebi",
+    "pk": 3,
+    "fields": {
+        "personel": 1,
+        "miktar": "1000.00",
+        "tarih": "2026-02-11",
+        "aciklama": "asd",
+        "durum": "Bekliyor"
+    }
+},
+{
+    "model": "core.avanshareketi",
+    "pk": 6,
+    "fields": {
+        "personel": 1,
+        "tarih": "2026-02-06T21:31:44.982Z",
+        "hareket_turu": "ODEME",
+        "miktar": "3500.00",
+        "onceki_borc": "1000.00",
+        "yeni_borc": "4500.00",
+        "aciklama": "Avans talebi onaylandi: 3500.00 TL"
+    }
+},
+{
+    "model": "core.avanshareketi",
+    "pk": 5,
+    "fields": {
+        "personel": 1,
+        "tarih": "2026-02-06T21:16:41.251Z",
+        "hareket_turu": "TALEP",
+        "miktar": "1000.00",
+        "onceki_borc": "1000.00",
+        "yeni_borc": "1000.00",
+        "aciklama": "asd"
+    }
+},
+{
+    "model": "core.avanshareketi",
+    "pk": 4,
+    "fields": {
+        "personel": 3,
+        "tarih": "2026-02-06T19:43:34.095Z",
+        "hareket_turu": "ODEME",
+        "miktar": "2500.00",
+        "onceki_borc": "0.00",
+        "yeni_borc": "2500.00",
+        "aciklama": "Avans talebi onaylandı: 2500.00 TL"
+    }
+},
+{
+    "model": "core.avanshareketi",
+    "pk": 3,
+    "fields": {
+        "personel": 3,
+        "tarih": "2026-02-06T19:02:49.347Z",
+        "hareket_turu": "TALEP",
+        "miktar": "2500.00",
+        "onceki_borc": "0.00",
+        "yeni_borc": "0.00",
+        "aciklama": "canım istedi"
+    }
+},
+{
+    "model": "core.avanshareketi",
+    "pk": 2,
+    "fields": {
+        "personel": 1,
+        "tarih": "2026-02-06T18:25:41.265Z",
+        "hareket_turu": "TALEP",
+        "miktar": "3500.00",
+        "onceki_borc": "1000.00",
+        "yeni_borc": "1000.00",
+        "aciklama": "Fatura ödeme"
+    }
+},
+{
+    "model": "core.avanshareketi",
+    "pk": 1,
+    "fields": {
+        "personel": 1,
+        "tarih": "2026-02-06T15:55:02.937Z",
+        "hareket_turu": "ODEME",
+        "miktar": "1000.00",
+        "onceki_borc": "0.00",
+        "yeni_borc": "1000.00",
+        "aciklama": "Zonguldak ziyaret"
+    }
+},
+{
+    "model": "core.izintalebi",
+    "pk": 1,
+    "fields": {
+        "personel": 1,
+        "baslangic_tarihi": "2026-02-01",
+        "bitis_tarihi": "2026-02-03",
+        "gun_sayisi": 2,
+        "aciklama": "",
+        "durum": "Onaylandı",
+        "talep_tarihi": "2026-02-06T18:25:10.428Z",
+        "admin_notu": ""
+    }
+},
+{
+    "model": "core.izintalebi",
+    "pk": 2,
+    "fields": {
+        "personel": 1,
+        "baslangic_tarihi": "2026-02-11",
+        "bitis_tarihi": "2026-02-14",
+        "gun_sayisi": 4,
+        "aciklama": "tatil",
+        "durum": "Onaylandi",
+        "talep_tarihi": "2026-02-06T20:15:55.312Z",
+        "admin_notu": ""
+    }
+},
+{
+    "model": "core.izintalebi",
+    "pk": 3,
+    "fields": {
+        "personel": 1,
+        "baslangic_tarihi": "2026-02-08",
+        "bitis_tarihi": "2026-02-10",
+        "gun_sayisi": 2,
+        "aciklama": "asd",
+        "durum": "Bekliyor",
+        "talep_tarihi": "2026-02-06T21:16:52.223Z",
+        "admin_notu": ""
+    }
+},
+{
+    "model": "core.izintalebi",
+    "pk": 4,
+    "fields": {
+        "personel": 1,
+        "baslangic_tarihi": "2026-02-04",
+        "bitis_tarihi": "2026-02-12",
+        "gun_sayisi": 8,
+        "aciklama": "asdasdasd",
+        "durum": "Bekliyor",
+        "talep_tarihi": "2026-02-06T21:18:39.971Z",
+        "admin_notu": ""
+    }
+},
+{
+    "model": "core.izintalebi",
+    "pk": 5,
+    "fields": {
+        "personel": 1,
+        "baslangic_tarihi": "2026-02-18",
+        "bitis_tarihi": "2026-02-19",
+        "gun_sayisi": 2,
+        "aciklama": "ada",
+        "durum": "Bekliyor",
+        "talep_tarihi": "2026-02-06T21:32:53.160Z",
+        "admin_notu": ""
+    }
+},
+{
+    "model": "core.masraftalebi",
+    "pk": 1,
+    "fields": {
+        "personel": 3,
+        "miktar": "1000.00",
+        "aciklama": "bilmem ne sebebiyle alım yapıldı",
+        "fis_fatura": "fis_faturalar/logo3.png",
+        "tarih": "2026-02-05",
+        "talep_tarihi": "2026-02-07T19:53:02.448Z",
+        "durum": "Onaylandı",
+        "admin_notu": ""
+    }
+},
+{
+    "model": "core.masraftalebi",
+    "pk": 2,
+    "fields": {
+        "personel": 3,
+        "miktar": "10000.00",
+        "aciklama": "asdasd",
+        "fis_fatura": "fis_faturalar/logo2.png",
+        "tarih": "2026-02-04",
+        "talep_tarihi": "2026-02-07T19:53:55.030Z",
+        "durum": "Onaylandı",
+        "admin_notu": ""
+    }
+}
 ]
