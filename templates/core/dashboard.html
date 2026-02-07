@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Muhasebe Paneli - Personel Listesi</h2>
+    <div class="btn-group">
+        <a href="{% url 'personel_ekle' %}" class="btn btn-primary">
+            + Manuel Personel Ekle
+        </a>
+        <a href="{% url 'personel_yukle' %}" class="btn btn-warning">
+            Toplu Yükle (Excel)
+        </a>
+        <a href="{% url 'export_csv' %}" class="btn btn-success">
+            Avans Listesini İndir (CSV)
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>TC No</th>
+                        <th>Ad Soyad</th>
+                        <th>Telefon</th>
+                        <th>Kalan İzin</th>
+                        <th>Güncel Avans Borcu</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in personeller %}
+                    <tr>
+                        <td>{{ p.tc_no }}</td>
+                        <td>{{ p.user.get_full_name|upper }}</td>
+                        <td>{{ p.telefon }}</td>
+                        <td><span class="badge bg-info text-dark">{{ p.kalan_izin }} Gün</span></td>
+                        <td><strong class="text-danger">{{ p.guncel_avans_borcu }} TL</strong></td>
+                        <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#editModal{{ p.id }}">
+                                Borç Düzenle
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="editModal{{ p.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form method="post" action="{% url 'borc_guncelle' p.id %}">
+                                            {% csrf_token %}
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Borç Düzenle: {{ p.user.get_full_name|upper }}
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Güncel Avans Borcu</label>
+                                                    <input type="number" step="0.01" name="guncel_avans_borcu"
+                                                        class="form-control"
+                                                        value="{{ p.guncel_avans_borcu|stringformat:'.2f' }}">
+                                                    <div class="form-text">Maaştan kesinti yapıldığında bu alanı
+                                                        güncelleyebilirsiniz.</div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">İptal</button>
+                                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Kayıtlı personel bulunamadı.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Bekleyen Talepler</h2>
+
+    <div class="row">
+        <!-- Bekleyen İzin Talepleri -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">İzin Talepleri ({{ bekleyen_izin_talepleri|length }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if bekleyen_izin_talepleri %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Personel</th>
+                                    <th>TC No</th>
+                                    <th>Tarih Aralığı</th>
+                                    <th>Gün</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for talep in bekleyen_izin_talepleri %}
+                                <tr>
+                                    <td>{{ talep.personel.user.get_full_name|upper }}</td>
+                                    <td>{{ talep.personel.tc_no }}</td>
+                                    <td>
+                                        {{ talep.baslangic_tarihi|date:"d.m.Y" }} -
+                                        {{ talep.bitis_tarihi|date:"d.m.Y" }}
+                                    </td>
+                                    <td><strong>{{ talep.gun_sayisi }}</strong></td>
+                                    <td>
+                                        <a href="{% url 'izin_islem' talep.id 'onayla' %}"
+                                            class="btn btn-sm btn-success"
+                                            onclick="return confirm('İzni onaylamak istediğinizden emin misiniz?')">
+                                            Onayla
+                                        </a>
+                                        <a href="{% url 'izin_islem' talep.id 'reddet' %}" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('İzni reddetmek istediğinizden emin misiniz?')">
+                                            Reddet
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center py-3">Bekleyen izin talebi yok.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Bekleyen Avans Talepleri -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-info">
+                    <h5 class="mb-0">Avans Talepleri ({{ bekleyen_avans_talepleri|length }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if bekleyen_avans_talepleri %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Personel</th>
+                                    <th>TC No</th>
+                                    <th>Miktar</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for talep in bekleyen_avans_talepleri %}
+                                <tr>
+                                    <td>{{ talep.personel.user.get_full_name|upper }}</td>
+                                    <td>{{ talep.personel.tc_no }}</td>
+                                    <td><strong>{{ talep.miktar }} TL</strong></td>
+                                    <td>
+                                        <a href="{% url 'avans_islem' talep.id 'onayla' %}"
+                                            class="btn btn-sm btn-success"
+                                            onclick="return confirm('Avans talebini onaylamak istediğinizden emin misiniz?')">
+                                            Onayla
+                                        </a>
+                                        <a href="{% url 'avans_islem' talep.id 'reddet' %}"
+                                            class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Avans talebini reddetmek istediğinizden emin misiniz?')">
+                                            Reddet
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center py-3">Bekleyen avans talebi yok.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

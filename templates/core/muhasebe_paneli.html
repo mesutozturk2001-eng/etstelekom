@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Muhasebe Paneli - Avans Yönetimi</h2>
+    <a href="{% url 'export_csv' %}" class="btn btn-success">
+        <i class="bi bi-file-earmark-excel"></i> Borç Listesini İndir (CSV)
+    </a>
+</div>
+
+<div class="row">
+    <!-- Bekleyen Talepler -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="card-title mb-0">Bekleyen Avans Talepleri</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Personel</th>
+                                <th>Tarih</th>
+                                <th>Miktar</th>
+                                <th>Açıklama</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for talep in bekleyen_talepler %}
+                            <tr>
+                                <td>{{ talep.personel.user.get_full_name|upper }}</td>
+                                <td>{{ talep.tarih }}</td>
+                                <td>{{ talep.miktar }} TL</td>
+                                <td>{{ talep.aciklama }}</td>
+                                <td>
+                                    <a href="{% url 'avans_islem' talep.id 'onayla' %}"
+                                        class="btn btn-success btn-sm">Onayla</a>
+                                    <a href="{% url 'avans_islem' talep.id 'reddet' %}"
+                                        class="btn btn-danger btn-sm">Reddet</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Bekleyen talep yok.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tüm Personeller -->
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="card-title mb-0">Tüm Personeller</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Personel</th>
+                                <th>Pozisyon</th>
+                                <th>TC No</th>
+                                <th>Telefon</th>
+                                <th>İşe Giriş</th>
+                                <th>Borç</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in personeller %}
+                            <tr>
+                                <td>{{ p.user.get_full_name|upper }}</td>
+                                <td>{{ p.pozisyon|default:'-' }}</td>
+                                <td>{{ p.tc_no }}</td>
+                                <td>{{ p.telefon }}</td>
+                                <td>{{ p.ise_giris_tarihi }}</td>
+                                <td class="{% if p.guncel_avans_borcu > 0 %}text-danger fw-bold{% endif %}">
+                                    {{ p.guncel_avans_borcu }} TL
+                                </td>
+                                <td>
+                                    <a href="{% url 'personel_detay' p.id %}"
+                                        class="btn btn-info btn-sm text-white">Detay</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">Kayıtlı personel yok.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Son İşlemler -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="card-title mb-0">Son İşlemler</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for talep in onaylanan_talepler %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            {{ talep.personel.user.get_full_name|upper }} - {{ talep.miktar }} TL
+                        </span>
+                        <span class="text-muted small">{{ talep.tarih }}</span>
+                    </li>
+                    {% endfor %}
+                    {% for talep in reddedilen_talepler %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="bi bi-x-circle-fill text-danger"></i>
+                            {{ talep.personel.user.get_full_name|upper }} - {{ talep.miktar }} TL
+                        </span>
+                        <span class="text-muted small">{{ talep.tarih }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

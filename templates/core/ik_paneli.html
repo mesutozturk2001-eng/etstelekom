@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">IK Paneli - Personel Yönetimi</h2>
+    <div class="btn-group">
+        <a href="{% url 'personel_ekle' %}" class="btn btn-primary">
+            + Manuel Personel Ekle
+        </a>
+        <a href="{% url 'personel_yukle' %}" class="btn btn-warning">
+            Toplu Yükle (Excel)
+        </a>
+        <a href="{% url 'toplu_excel_indir' %}" class="btn btn-success">
+            Toplu İndir (Excel)
+        </a>
+    </div>
+</div>
+
+<!-- Arama Kutusu -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Personel Ara</label>
+                <input type="text" name="q" class="form-control" placeholder="Ad, Soyad veya TC No..."
+                    value="{{ request.GET.q|default:'' }}">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Ara</button>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <a href="{% url 'ik_paneli' %}" class="btn btn-secondary w-100">Temizle</a>
+            </div>
+        </form>
+        {% if request.GET.q %}
+        <small class="text-muted mt-2 d-block">
+            "{{ request.GET.q }}" için sonuçlar gösteriliyor
+        </small>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>TC No</th>
+                        <th>Ad Soyad</th>
+                        <th>Pozisyon</th>
+                        <th>İşe Giriş</th>
+                        <th>Telefon</th>
+                        <th>İzin Hakkı</th>
+                        <th>Kalan İzin</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in personeller %}
+                    <tr>
+                        <td>{{ p.tc_no }}</td>
+                        <td>{{ p.user.get_full_name|upper }}</td>
+                        <td>{{ p.pozisyon|default:'-' }}</td>
+                        <td>{{ p.ise_giris_tarihi }}</td>
+                        <td>{{ p.telefon }}</td>
+                        <td>{{ p.izin_hakki }}</td>
+                        <td>
+                            {% if p.kalan_izin < 0 %} <span class="text-danger fw-bold">{{ p.kalan_izin }} gün</span>
+                                {% else %}
+                                {{ p.kalan_izin }} gün
+                                {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'personel_duzenle' p.id %}"
+                                class="btn btn-sm btn-info text-white">Düzenle</a>
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal{{ p.id }}">
+                                Sil
+                            </button>
+
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal{{ p.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Personeli Sil</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ p.user.get_full_name|upper }} personelini silmek istediğinize emin
+                                                misiniz?
+                                            </p>
+                                            <small class="text-danger">Bu işlem geri alınamaz!</small>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">İptal</button>
+                                            <form action="{% url 'personel_sil' p.id %}" method="post" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">Kayıtlı personel bulunamadı.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

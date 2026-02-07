@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-success text-white">
+        <h4 class="mb-0">Egitimlerim</h4>
+    </div>
+    <div class="card-body">
+        {% if personel %}
+        <h5 class="mb-3">{{ personel.user.get_full_name }} - Egitim Listesi</h5>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Egitim Adi</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" class="text-center">Henuz egitim kaydi bulunmuyor.</td>
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-warning">Personel bilgisi bulunamadi.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

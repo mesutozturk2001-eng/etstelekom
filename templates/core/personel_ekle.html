@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .field-error {
+        border-color: #dc3545 !important;
+    }
+
+    .error-message {
+        font-size: 0.875em;
+        color: #dc3545;
+        margin-top: 0.25rem;
+    }
+</style>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Manuel Personel Ekle</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                        {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <h5 class="mb-3 text-muted">Kişisel Bilgileri</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.first_name.label }} *</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                            <div class="error-message">{{ form.first_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.last_name.label }} *</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                            <div class="error-message">{{ form.last_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mb-3 text-muted">Personel Detayları</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.tc_no.label }} *</label>
+                            {{ form.tc_no }}
+                            {% if form.tc_no.errors %}
+                            <div class="error-message">{{ form.tc_no.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.telefon.label }}</label>
+                            {{ form.telefon }}
+                            {% if form.telefon.errors %}
+                            <div class="error-message">{{ form.telefon.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.pozisyon.label }}</label>
+                        {{ form.pozisyon }}
+                        {% if form.pozisyon.errors %}
+                        <div class="error-message">{{ form.pozisyon.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.profil_tipi.label }} *</label>
+                        {{ form.profil_tipi }}
+                        {% if form.profil_tipi.errors %}
+                        <div class="error-message">{{ form.profil_tipi.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">{{ form.adres.label }}</label>
+                        {{ form.adres }}
+                        {% if form.adres.errors %}
+                        <div class="error-message">{{ form.adres.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.ise_giris_tarihi.label }} *</label>
+                            {{ form.ise_giris_tarihi }}
+                            {% if form.ise_giris_tarihi.errors %}
+                            <div class="error-message">{{ form.ise_giris_tarihi.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.izin_hakki.label }}</label>
+                            {{ form.izin_hakki }}
+                            {% if form.izin_hakki.errors %}
+                            <div class="error-message">{{ form.izin_hakki.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">{{ form.kalan_izin.label }}</label>
+                            {{ form.kalan_izin }}
+                            {% if form.kalan_izin.errors %}
+                            <div class="error-message">{{ form.kalan_izin.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">{{ form.guncel_avans_borcu.label }}</label>
+                        {{ form.guncel_avans_borcu }}
+                        {% if form.guncel_avans_borcu.errors %}
+                        <div class="error-message">{{ form.guncel_avans_borcu.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'ik_paneli' %}" class="btn btn-secondary">İptal</a>
+                        <button type="submit" class="btn btn-success">Personeli Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function turkishToEnglish(str) {
+        const turkishMap = {
+            'ğ': 'g', 'Ğ': 'G',
+            'ş': 's', 'Ş': 'S',
+            'ı': 'i', 'İ': 'I',
+            'ö': 'o', 'Ö': 'O',
+            'ü': 'u', 'Ü': 'U',
+            'ç': 'c', 'Ç': 'C'
+        };
+        return str.split('').map(char => turkishMap[char] || char).join('');
+    }
+
+    function autoGenerateEmail() {
+        const firstName = document.getElementById('id_first_name').value.trim();
+        const lastName = document.getElementById('id_last_name').value.trim();
+
+        if (firstName && lastName) {
+            const firstNameEn = turkishToEnglish(firstName.toLowerCase());
+            const lastNameEn = turkishToEnglish(lastName.toLowerCase());
+            const email = firstNameEn + '.' + lastNameEn + '@ets-telekom.com.tr';
+            document.getElementById('id_email').value = email;
+        }
+    }
+</script>
+{% endblock %}

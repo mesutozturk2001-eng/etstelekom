@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h4 class="mb-0">İzin Talebi Değerlendir</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <h5>Personel Bilgileri</h5>
+                        <p><strong>Ad Soyad:</strong> {{ talep.personel.user.get_full_name|upper }}</p>
+                        <p><strong>TC No:</strong> {{ talep.personel.tc_no }}</p>
+                        <p><strong>Mevcut Kalan İzin:</strong> {{ talep.personel.kalan_izin }} gün</p>
+                        <p><strong>Talep Edilen İzin:</strong> {{ talep.gun_sayisi }} gün</p>
+                    </div>
+
+                    <div class="alert alert-secondary mb-4">
+                        <h5>İzin Detayları</h5>
+                        <p><strong>Başlangıç:</strong> {{ talep.baslangic_tarihi|date:"d.m.Y" }}</p>
+                        <p><strong>Bitiş:</strong> {{ talep.bitis_tarihi|date:"d.m.Y" }}</p>
+                        <p><strong>Gün Sayısı:</strong> {{ talep.gun_sayisi }} gün (Pazar günleri hariç)</p>
+                        <p><strong>Açıklama:</strong> {{ talep.aciklama|default:"Açıklama yok" }}</p>
+                        <p><strong>Talep Tarihi:</strong> {{ talep.talep_tarihi|date:"d.m.Y H:i" }}</p>
+                        <p><strong>Mevcut Durum:</strong>
+                            {% if talep.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">Bekliyor</span>
+                            {% elif talep.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">Onaylandı</span>
+                            {% else %}
+                            <span class="badge bg-danger">Reddedildi</span>
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="id_durum" class="form-label">Karar</label>
+                            {{ form.durum }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_admin_notu" class="form-label">Admin Notu (Opsiyonel)</label>
+                            {{ form.admin_notu }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                            <a href="{% url 'izin_listesi' %}" class="btn btn-secondary">İptal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

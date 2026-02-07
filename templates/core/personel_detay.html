@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">{{ personel.user.get_full_name|upper }}</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>TC No:</strong>
+                        <span>{{ personel.tc_no }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>İşe Giriş:</strong>
+                        <span>{{ personel.ise_giris_tarihi }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                        <strong>Kalan İzin:</strong>
+                        <span
+                            class="badge {% if personel.kalan_izin < 0 %}bg-danger{% else %}bg-info text-dark{% endif %}">
+                            {% if personel.kalan_izin < 0 %}{{ personel.kalan_izin }} gün (Eksik){% else %}{{
+                                personel.kalan_izin }} gün{% endif %} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                        <strong>Güncel Borç:</strong>
+                        <span class="badge bg-danger fs-6">{{ personel.guncel_avans_borcu }} TL</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Avans Ekle/Azalt Formu -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Avans İşlemi</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">İşlem Türü</label>
+                        {{ islem_form.islem_turu }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Miktar (TL)</label>
+                        {{ islem_form.miktar }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Açıklama</label>
+                        {{ islem_form.aciklama }}
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">İşlemi Uygula</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <!-- Hareket Tablosu -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0">Hesap Hareketleri</h5>
+            </div>
+            <div class="card-body">
+                {% if hareketler %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tarih</th>
+                                <th>İşlem Türü</th>
+                                <th>Miktar</th>
+                                <th>Önceki Borç</th>
+                                <th>Yeni Borç</th>
+                                <th>Açıklama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for h in hareketler %}
+                            <tr>
+                                <td>{{ h.tarih|date:"d.m.Y H:i" }}</td>
+                                <td>
+                                    {% if h.hareket_turu == 'TALEP' %}
+                                    <span class="badge bg-warning">Talep</span>
+                                    {% elif h.hareket_turu == 'ODEME' %}
+                                    <span class="badge bg-success">Ödeme</span>
+                                    {% else %}
+                                    <span class="badge bg-info">{{ h.hareket_turu }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ h.miktar }} TL</td>
+                                <td>{{ h.onceki_borc }} TL</td>
+                                <td>{{ h.yeni_borc }} TL</td>
+                                <td>{{ h.aciklama }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-4">Henüz bir hareket bulunmuyor.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Avans Talepleri -->
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Avans Talepleri</h5>
+            </div>
+            <div class="card-body">
+                {% if talepler %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Miktar</th>
+                                <th>Açıklama</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for talep in talepler %}
+                            <tr>
+                                <td>{{ talep.tarih }}</td>
+                                <td>{{ talep.miktar }} TL</td>
+                                <td>{{ talep.aciklama }}</td>
+                                <td>
+                                    {% if talep.durum == 'Bekliyor' %}
+                                    <span class="badge bg-warning text-dark">{{ talep.durum }}</span>
+                                    {% elif talep.durum == 'Onaylandı' %}
+                                    <span class="badge bg-success">{{ talep.durum }}</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">{{ talep.durum }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-4">Henüz bir talep bulunmuyor.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'muhasebe_paneli' %}" class="btn btn-secondary">← Muhasebe Paneline Dön</a>
+</div>
+{% endblock %}

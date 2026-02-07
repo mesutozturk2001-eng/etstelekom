@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">İzin Talep Et</h4>
+                </div>
+                <div class="card-body">
+                    {% if personel.kalan_izin < 0 %} <div class="alert alert-warning">
+                        <strong>Dikkat!</strong> Mevcut izin hakkınız eksi durumda: <strong>{{ personel.kalan_izin }}
+                            gün</strong><br>
+                        Admin onayı ile izin talebiniz eksiye düşebilir.
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <strong>Mevcut İzin Hakkınız:</strong> {{ personel.kalan_izin }} gün
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="id_baslangic_tarihi" class="form-label">Başlangıç Tarihi</label>
+                        {{ form.baslangic_tarihi }}
+                        {% if form.baslangic_tarihi.errors %}
+                        <div class="text-danger">{{ form.baslangic_tarihi.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_bitis_tarihi" class="form-label">Bitiş Tarihi</label>
+                        {{ form.bitis_tarihi }}
+                        {% if form.bitis_tarihi.errors %}
+                        <div class="text-danger">{{ form.bitis_tarihi.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <div id="gun-sayisi-box" class="alert alert-secondary">
+                            <strong>Çalışma Günü Sayısı:</strong> <span id="gun-sayisi">0</span> gün (Pazar hariç)
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_aciklama" class="form-label">Açıklama</label>
+                        {{ form.aciklama }}
+                        {% if form.aciklama.errors %}
+                        <div class="text-danger">{{ form.aciklama.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Talep Gönder</button>
+                        <a href="{% url 'personel_panel' %}" class="btn btn-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const baslangicInput = document.getElementById('id_baslangic_tarihi');
+        const bitisInput = document.getElementById('id_bitis_tarihi');
+        const gunSayisiSpan = document.getElementById('gun-sayisi');
+        const mevcutIzin = {{ personel.kalan_izin }};
+    }
+
+    function hesaplaGun() {
+        const baslangic = baslangicInput.value;
+        const bitis = bitisInput.value;
+
+        if (baslangic && bitis) {
+            fetch(`/hesapla-gun/?baslangic=${baslangic}&bitis=${bitis}`)
+                .then(response => response.json())
+                .then(data => {
+                    gunSayisiSpan.textContent = data.gun_sayisi;
+
+                    const gunSayisi = data.gun_sayisi;
+                    const box = document.getElementById('gun-sayisi-box');
+
+                    if (mevcutIzin < 0 || gunSayisi > mevcutIzin) {
+                        box.className = 'alert alert-warning';
+                        box.innerHTML = `<strong>Calisma Gunu Sayisi:</strong> ${gunSayisi} gun (Pazar haric)<br><small>⚠️ Yeterli izin hakkiniz yok! Mevcut: ${mevcutIzin} gun. Admin onayi ile izin eksiye dusabilir.</small>`;
+                    } else {
+                        box.className = 'alert alert-secondary';
+                        box.innerHTML = `<strong>Calisma Gunu Sayisi:</strong> ${gunSayisi} gun (Pazar haric)`;
+                    }
+                });
+        }
+    }
+
+    baslangicInput.addEventListener('change', hesaplaGun);
+    bitisInput.addEventListener('change', hesaplaGun);
+});
+</script>
+{% endblock %}
