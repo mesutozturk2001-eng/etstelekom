@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% load core_tags %}
 
 
@@ -43,8 +43,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         <strong>Avans Borcu:</strong>
-                        <span
-                            class="badge {% if personel.guncel_avans_borcu > 0 %}bg-danger{% else %}bg-success{% endif %}">
+                        <span class="badge {% if personel.guncel_avans_borcu > 0 %}bg-danger{% else %}bg-success{% endif %}">
                             {{ personel.guncel_avans_borcu }} TL
                         </span>
                     </li>
@@ -72,9 +71,7 @@
                         <tr>
                             <td>{{ z.malzeme }}</td>
                             <td>{{ z.tarih|date:"d.m.Y" }}</td>
-                            <td><span
-                                    class="badge {% if z.durum == 'Aktif' %}bg-success{% else %}bg-secondary{% endif %}">{{
-                                    z.durum }}</span></td>
+                            <td><span class="badge {% if z.durum == 'Aktif' %}bg-success{% else %}bg-secondary{% endif %}">{{ z.durum }}</span></td>
                         </tr>
                         {% empty %}
                         <tr>
