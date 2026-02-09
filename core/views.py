@@ -214,10 +214,15 @@ def personel_panel(request):
     else:
         form = AvansTalepForm()
         
+    zimmetler = Zimmet.objects.filter(personel=personel).order_by('-tarih')
+    egitimler = Egitim.objects.filter(personel=personel).order_by('-tarih')
+        
     return render(request, 'core/personel.html', {
         'personel': personel,
         'talepler': talepler,
         'izin_talepleri': izin_talepleri,
+        'zimmetler': zimmetler,
+        'egitimler': egitimler,
         'form': form,
         'bilgi_form': bilgi_form
     })

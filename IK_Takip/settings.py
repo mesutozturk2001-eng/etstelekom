@@ -132,5 +132,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_URL = '/login/'
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 DATE_FORMAT = 'd.m.Y'
 DATE_INPUT_FORMATS = ['%d.%m.%Y', '%Y-%m-%d']

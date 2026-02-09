@@ -4,10 +4,9 @@
 
 {% block content %}
 <div class="row">
-    <!-- SOL TARAF -->
-    <div class="col-md-4 mb-4">
-        <!-- Personel Bilgileri -->
-        <div class="card shadow-sm mb-4">
+    <!-- ÜST SATIR: Personel Bilgileri ve Zimmetlerim -->
+    <div class="col-md-5 mb-4">
+        <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Personel Bilgileri</h5>
             </div>
@@ -35,33 +34,64 @@
                         <small class="text-muted">{{ personel.adres|default:'-' }}</small>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                        <strong>Kalan İzin Hakkı:</strong>
+                        <strong>Kalan İzin:</strong>
                         {% with kalan=personel.kalan_izin|default:0 %}
                         <span class="badge {% if kalan < 0 %}bg-danger{% else %}bg-info text-dark{% endif %}">
-                            {% if kalan < 0 %}{{ kalan }} gün (Eksik){% else %}{{ kalan }} gün{% endif %} </span>
-                                {% endwith %}
+                            {{ kalan }} gün
+                        </span>
+                        {% endwith %}
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                        <strong>Avans Bakiyesi:</strong>
-                        {% if personel.guncel_avans_borcu > 0 %}
-                        <span class="badge bg-danger">{{ personel.guncel_avans_borcu }} TL</span>
-                        {% elif personel.guncel_avans_borcu < 0 %} <span class="badge bg-success">{{
-                            personel.guncel_avans_borcu|abs }} TL</span>
-                            {% else %}
-                            <span class="badge bg-secondary">0 TL</span>
-                            {% endif %}
-                    </li>
-
-
-                    <li class="list-group-item text-center">
-                        <a href="{% url 'sifre_degistir' %}" class="btn btn-outline-warning btn-sm">Şifre Değiştir</a>
+                        <strong>Avans Borcu:</strong>
+                        <span
+                            class="badge {% if personel.guncel_avans_borcu > 0 %}bg-danger{% else %}bg-success{% endif %}">
+                            {{ personel.guncel_avans_borcu }} TL
+                        </span>
                     </li>
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- Bilgilerimi Güncelle -->
-        <div class="card shadow-sm mb-4">
+    <div class="col-md-7 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0">Zimmetlerim</h5>
+            </div>
+            <div class="card-body overflow-auto">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Malzeme</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for z in zimmetler %}
+                        <tr>
+                            <td>{{ z.malzeme }}</td>
+                            <td>{{ z.tarih|date:"d.m.Y" }}</td>
+                            <td><span
+                                    class="badge {% if z.durum == 'Aktif' %}bg-success{% else %}bg-secondary{% endif %}">{{
+                                    z.durum }}</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Zimmet kaydı bulunmuyor.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- ALT SATIR: Bilgilerimi Güncelle ve Eğitimlerim -->
+    <div class="col-md-5 mb-4">
+        <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Bilgilerimi Güncelle</h5>
             </div>
@@ -71,73 +101,46 @@
                     <input type="hidden" name="bilgi_guncelle" value="1">
                     {% for field in bilgi_form %}
                     <div class="mb-3">
-                        <label class="form-label">{{ field.label }}</label>
+                        <label class="form-label small mb-1">{{ field.label }}</label>
                         {{ field }}
                     </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary w-100">Güncelle</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">Güncelle</button>
                 </form>
             </div>
         </div>
-
-
     </div>
 
-    <!-- SAĞ TARAF -->
-    <div class="col-md-8">
-
-        <!-- Zimmetlerim -->
-        <div class="card shadow-sm mb-4" style="height: 280px;">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Zimmetlerim</h5>
-            </div>
-            <div class="card-body overflow-auto">
-                {% if personel %}
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Malzeme</th>
-                            <th>Tarih</th>
-                            <th>Durum</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="3" class="text-center">Henuz zimmet kaydi bulunmuyor.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                {% else %}
-                <div class="alert alert-warning">Personel bilgisi bulunamadi.</div>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Eğitimlerim -->
-        <div class="card shadow-sm" style="height: 200px;">
-            <div class="card-header bg-primary text-white">
+    <div class="col-md-7 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white">
                 <h5 class="card-title mb-0">Eğitimlerim</h5>
             </div>
             <div class="card-body overflow-auto">
-                {% if personel %}
-                <table class="table table-striped">
-                    <thead>
+                <table class="table table-hover">
+                    <thead class="table-light">
                         <tr>
-                            <th>Eğitim Adi</th>
+                            <th>Eğitim Adı</th>
                             <th>Tarih</th>
                             <th>Durum</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for e in egitimler %}
                         <tr>
-                            <td colspan="3" class="text-center">Henuz eğitim kaydi bulunmuyor.</td>
+                            <td>{{ e.egitim_adi }}</td>
+                            <td>{{ e.tarih|date:"d.m.Y" }}</td>
+                            <td><span class="badge bg-info text-dark">{{ e.durum }}</span></td>
                         </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Eğitim kaydı bulunmuyor.</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                {% else %}
-                <div class="alert alert-warning">Personel bilgisi bulunamadi.</div>
-                {% endif %}
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
