@@ -43,4 +43,11 @@ urlpatterns = [
     # Auth
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    # Zimmet ve Egitim Yönetimi
+    path('zimmet-yonetim/', views.zimmet_yonetim_home, name='zimmet_yonetim_home'),
+    path('zimmet-yonetimi/<int:personel_id>/', views.zimmet_yonetimi, name='zimmet_yonetimi'),
+    path('zimmet-sil/<int:zimmet_id>/', views.zimmet_sil, name='zimmet_sil'),
+    path('egitim-yonetim/', views.egitim_yonetim_home, name='egitim_yonetim_home'),
+    path('egitim-yonetimi/<int:personel_id>/', views.egitim_yonetimi, name='egitim_yonetimi'),
+    path('egitim-sil/<int:egitim_id>/', views.egitim_sil, name='egitim_sil'),
 ]

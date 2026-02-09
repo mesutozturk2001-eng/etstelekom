@@ -62,7 +62,7 @@
 
         <!-- Bilgilerimi Güncelle -->
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-info text-white">
+            <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Bilgilerimi Güncelle</h5>
             </div>
             <div class="card-body">
@@ -75,7 +75,7 @@
                         {{ field }}
                     </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-info text-white w-100">Güncelle</button>
+                    <button type="submit" class="btn btn-primary w-100">Güncelle</button>
                 </form>
             </div>
         </div>
@@ -87,14 +87,12 @@
     <div class="col-md-8">
 
         <!-- Zimmetlerim -->
-        <div class="card shadow-sm mb-4">
+        <div class="card shadow-sm mb-4" style="height: 280px;">
             <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Zimmetlerim</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 {% if personel %}
-                <h5 class="mb-3">{{ personel.user.get_full_name }} - Zimmet Listesi</h5>
-
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -116,14 +114,12 @@
         </div>
 
         <!-- Eğitimlerim -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-success text-white">
+        <div class="card shadow-sm" style="height: 200px;">
+            <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Eğitimlerim</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 {% if personel %}
-                <h5 class="mb-3">{{ personel.user.get_full_name }} - Eğitim Listesi</h5>
-
                 <table class="table table-striped">
                     <thead>
                         <tr>

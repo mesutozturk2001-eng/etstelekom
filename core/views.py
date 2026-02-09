@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
-from .models import Personel, AvansTalebi, AvansHareketi, IzinTalebi, MasrafTalebi
-from .forms import AvansTalepForm, PersonelForm, ExcelUploadForm, AvansIslemForm, PersonelKendiForm, IzinTalebiForm, IzinOnayForm, MasrafTalepForm, MasrafOnayForm
+from .models import Personel, AvansTalebi, AvansHareketi, IzinTalebi, MasrafTalebi, Zimmet, Egitim
+from .forms import AvansTalepForm, PersonelForm, ExcelUploadForm, AvansIslemForm, PersonelKendiForm, IzinTalebiForm, IzinOnayForm, MasrafTalepForm, MasrafOnayForm, ZimmetForm, EgitimForm
 from .models import yillik_izin_hakki_hesapla, calisma_gunleri_hesapla, get_profil_tipi
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -903,3 +903,103 @@ def talep_yonetim(request):
     }
     
     return render(request, 'core/talep_yonetim.html', context)
+
+
+# ========== ZIMMET VE EGITIM YONETIMI ==========
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def zimmet_yonetim_home(request):
+    """Zimmet yönetimi için personel seçimi"""
+    query = request.GET.get('q', '')
+    if query:
+        personeller = Personel.objects.filter(
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query) |
+            Q(tc_no__icontains=query)
+        ).order_by('user__first_name')
+    else:
+        personeller = Personel.objects.all().order_by('user__first_name')[:50]
+    return render(request, 'core/zimmet_yonetim_home.html', {'personeller': personeller, 'query': query})
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def egitim_yonetim_home(request):
+    """Eğitim yönetimi için personel seçimi"""
+    query = request.GET.get('q', '')
+    if query:
+        personeller = Personel.objects.filter(
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query) |
+            Q(tc_no__icontains=query)
+        ).order_by('user__first_name')
+    else:
+        personeller = Personel.objects.all().order_by('user__first_name')[:50]
+    return render(request, 'core/egitim_yonetim_home.html', {'personeller': personeller, 'query': query})
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def zimmet_yonetimi(request, personel_id):
+    """Personel zimmetlerini yönetme sayfası"""
+    personel = get_object_or_404(Personel, id=personel_id)
+    zimmeter = Zimmet.objects.filter(personel=personel).order_by('-tarih')
+    
+    if request.method == 'POST':
+        form = ZimmetForm(request.POST)
+        if form.is_valid():
+            zimmet = form.save(commit=False)
+            zimmet.personel = personel
+            zimmet.save()
+            messages.success(request, 'Zimmet başarıyla eklendi.')
+            return redirect('zimmet_yonetimi', personel_id)
+    else:
+        form = ZimmetForm()
+    
+    return render(request, 'core/zimmet_yonetimi.html', {
+        'personel': personel,
+        'zimmeter': zimmeter,
+        'form': form
+    })
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def zimmet_sil(request, zimmet_id):
+    """Zimmet silme"""
+    zimmet = get_object_or_404(Zimmet, id=zimmet_id)
+    personel_id = zimmet.personel.id
+    zimmet.delete()
+    messages.success(request, 'Zimmet başarıyla silindi.')
+    return redirect('zimmet_yonetimi', personel_id)
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def egitim_yonetimi(request, personel_id):
+    """Personel eğitimlerini yönetme sayfası"""
+    personel = get_object_or_404(Personel, id=personel_id)
+    egitimler = Egitim.objects.filter(personel=personel).order_by('-tarih')
+    
+    if request.method == 'POST':
+        form = EgitimForm(request.POST)
+        if form.is_valid():
+            egitim = form.save(commit=False)
+            egitim.personel = personel
+            egitim.save()
+            messages.success(request, 'Eğitim başarıyla eklendi.')
+            return redirect('egitim_yonetimi', personel_id)
+    else:
+        form = EgitimForm()
+    
+    return render(request, 'core/egitim_yonetimi.html', {
+        'personel': personel,
+        'egitimler': egitimler,
+        'form': form
+    })
+
+
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_patron(u))
+def egitim_sil(request, egitim_id):
+    """Eğitim silme"""
+    egitim = get_object_or_404(Egitim, id=egitim_id)
+    personel_id = egitim.personel.id
+    egitim.delete()
+    messages.success(request, 'Eğitim başarıyla silindi.')
+    return redirect('egitim_yonetimi', personel_id)

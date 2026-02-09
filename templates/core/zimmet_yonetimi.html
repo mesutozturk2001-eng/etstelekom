@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">{{ personel.user.get_full_name }} - Zimmet Yönetimi</h2>
+        <a href="{% url 'personel_detay' personel.id %}" class="btn btn-outline-secondary btn-sm">← Personel Detayına
+            Dön</a>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Zimmet Ekleme Formu -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Yeni Zimmet Ekle</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary w-100">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zimmet Listesi -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Zimmet Listesi</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Malzeme</th>
+                                <th>Tarih</th>
+                                <th>Durum</th>
+                                <th>Açıklama</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for zimmet in zimmeter %}
+                            <tr>
+                                <td>{{ zimmet.malzeme }}</td>
+                                <td>{{ zimmet.tarih }}</td>
+                                <td>
+                                    {% if zimmet.durum == 'Aktif' %}
+                                    <span class="badge bg-success">{{ zimmet.durum }}</span>
+                                    {% elif zimmet.durum == 'Iade Edildi' %}
+                                    <span class="badge bg-secondary">{{ zimmet.durum }}</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">{{ zimmet.durum }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ zimmet.aciklama|truncatechars:30 }}</td>
+                                <td>
+                                    <a href="{% url 'zimmet_sil' zimmet.id %}" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Bu zimmeti silmek istediğinizden emin misiniz?')">Sil</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Henüz zimmet kaydı bulunmuyor.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

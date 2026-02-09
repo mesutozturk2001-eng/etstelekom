@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">{{ personel.user.get_full_name }} - Eğitim Yönetimi</h2>
+        <a href="{% url 'personel_detay' personel.id %}" class="btn btn-outline-secondary btn-sm">← Personel Detayına
+            Dön</a>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Eğitim Ekleme Formu -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Yeni Eğitim Ekle</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success w-100">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Eğitim Listesi -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Eğitim Listesi</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Eğitim Adı</th>
+                                <th>Tarih</th>
+                                <th>Süre</th>
+                                <th>Durum</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for egitim in egitimler %}
+                            <tr>
+                                <td>{{ egitim.egitim_adi }}</td>
+                                <td>{{ egitim.tarih }}</td>
+                                <td>{{ egitim.sure }}</td>
+                                <td>
+                                    {% if egitim.durum == 'Tamamlandı' %}
+                                    <span class="badge bg-success">{{ egitim.durum }}</span>
+                                    {% elif egitim.durum == 'Devam Ediyor' %}
+                                    <span class="badge bg-warning text-dark">{{ egitim.durum }}</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">{{ egitim.durum }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'egitim_sil' egitim.id %}" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Bu eğitimi silmek istediğinizden emin misiniz?')">Sil</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Henüz eğitim kaydı bulunmuyor.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -245,3 +245,36 @@ class MasrafTalebi(models.Model):
 
     def __str__(self):
         return f"{self.personel.user.get_full_name()} - {self.miktar} TL ({self.durum})"
+
+
+class Zimmet(models.Model):
+    DURUM_CHOICES = [
+        ('Aktif', 'Aktif'),
+        ('Iade Edildi', 'Iade Edildi'),
+        ('Zarar Gördü', 'Zarar Gördü'),
+    ]
+    personel = models.ForeignKey(Personel, on_delete=models.CASCADE, related_name='zimmetler')
+    malzeme = models.CharField(max_length=200, verbose_name="Malzeme Adı")
+    tarih = models.DateField(verbose_name="Zimmet Tarihi")
+    durum = models.CharField(max_length=20, choices=DURUM_CHOICES, default='Aktif', verbose_name="Durum")
+    aciklama = models.TextField(blank=True, verbose_name="Açıklama")
+
+    def __str__(self):
+        return f"{self.personel.user.get_full_name()} - {self.malzeme}"
+
+
+class Egitim(models.Model):
+    DURUM_CHOICES = [
+        ('Tamamlandı', 'Tamamlandı'),
+        ('Devam Ediyor', 'Devam Ediyor'),
+        ('Bekliyor', 'Bekliyor'),
+    ]
+    personel = models.ForeignKey(Personel, on_delete=models.CASCADE, related_name='egitimler')
+    egitim_adi = models.CharField(max_length=200, verbose_name="Eğitim Adı")
+    tarih = models.DateField(verbose_name="Eğitim Tarihi")
+    sure = models.CharField(max_length=50, blank=True, verbose_name="Süre")
+    durum = models.CharField(max_length=20, choices=DURUM_CHOICES, default='Bekliyor', verbose_name="Durum")
+    aciklama = models.TextField(blank=True, verbose_name="Açıklama")
+
+    def __str__(self):
+        return f"{self.personel.user.get_full_name()} - {self.egitim_adi}"

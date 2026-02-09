@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import AvansTalebi, Personel, AvansHareketi, IzinTalebi, MasrafTalebi, PROFIL_CHOICES
+from .models import AvansTalebi, Personel, AvansHareketi, IzinTalebi, MasrafTalebi, Zimmet, Egitim, PROFIL_CHOICES
 
 class AvansTalepForm(forms.ModelForm):
     class Meta:
@@ -154,4 +154,31 @@ class MasrafOnayForm(forms.ModelForm):
         widgets = {
             'durum': forms.Select(attrs={'class': 'form-select'}),
             'admin_notu': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Varsa notunuz'}),
+        }
+
+
+# Zimmet Formu (Admin için)
+class ZimmetForm(forms.ModelForm):
+    class Meta:
+        model = Zimmet
+        fields = ['malzeme', 'tarih', 'durum', 'aciklama']
+        widgets = {
+            'malzeme': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Malzeme Adı'}),
+            'tarih': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'durum': forms.Select(attrs={'class': 'form-select'}),
+            'aciklama': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Açıklama'}),
+        }
+
+
+# Egitim Formu (Admin için)
+class EgitimForm(forms.ModelForm):
+    class Meta:
+        model = Egitim
+        fields = ['egitim_adi', 'tarih', 'sure', 'durum', 'aciklama']
+        widgets = {
+            'egitim_adi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Eğitim Adı'}),
+            'tarih': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'sure': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Süre (örn: 2 saat)'}),
+            'durum': forms.Select(attrs={'class': 'form-select'}),
+            'aciklama': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Açıklama'}),
         }
