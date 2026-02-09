@@ -35,9 +35,12 @@ urlpatterns = [
     path('masraf-islem/<int:talep_id>/<str:islem>/', views.masraf_islem, name='masraf_islem'),
     # Taleplerim (Personel)
     path('taleplerim/', views.taleplerim, name='taleplerim'),
+    path('taleplerim/avans/', views.avans_taleplerim, name='avans_taleplerim'),
+    path('taleplerim/izin/', views.izin_taleplerim, name='izin_taleplerim'),
+    path('taleplerim/masraf/', views.masraf_taleplerim, name='masraf_taleplerim'),
     # Talep Yönetim (Admin/Muhasebe/Patron)
     path('talep-yonetim/', views.talep_yonetim, name='talep_yonetim'),
     # Auth
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
+    path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 ]

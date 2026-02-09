@@ -65,9 +65,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.user_profile',
             ],
+            'libraries': {
+                'core_tags': 'core.templatetags.core_tags',
+            }
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'IK_Takip.wsgi.application'
 

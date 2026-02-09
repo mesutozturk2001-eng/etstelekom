@@ -822,6 +822,41 @@ def masraf_detay(request, talep_id):
 
 
 @login_required
+def avans_taleplerim(request):
+    """Personelin avans taleplerini gördüğü sayfa"""
+    personel = get_object_or_404(Personel, user=request.user)
+    avans_talepleri = AvansTalebi.objects.filter(personel=personel).order_by('-tarih')
+    
+    form = None
+    if request.method == 'POST' and 'avans_talep' in request.POST:
+        form = AvansTalepForm(request.POST)
+        if form.is_valid():
+            talep = form.save(commit=False)
+            talep.personel = personel
+            hareket_kaydet(personel, 'TALEP', talep.miktar, talep.aciklama)
+            talep.save()
+            messages.success(request, 'Avans talebiniz iletildi.')
+            return redirect('avans_taleplerim')
+    else:
+        form = AvansTalepForm()
+    
+    return render(request, 'core/avans_taleplerim.html', {'avans_talepleri': avans_talepleri, 'form': form})
+
+@login_required
+def izin_taleplerim(request):
+    """Personelin izin taleplerini gördüğü sayfa"""
+    personel = get_object_or_404(Personel, user=request.user)
+    izin_talepleri = IzinTalebi.objects.filter(personel=personel).order_by('-talep_tarihi')
+    return render(request, 'core/izin_taleplerim.html', {'izin_talepleri': izin_talepleri, 'personel': personel})
+
+@login_required
+def masraf_taleplerim(request):
+    """Personelin masraf taleplerini gördüğü sayfa"""
+    personel = get_object_or_404(Personel, user=request.user)
+    masraf_talep = MasrafTalebi.objects.filter(personel=personel).order_by('-talep_tarihi')
+    return render(request, 'core/masraf_taleplerim.html', {'masraf_talep': masraf_talep})
+
+@login_required
 def taleplerim(request):
     """Personelin tüm taleplerini gördüğü sayfa"""
     personel = get_object_or_404(Personel, user=request.user)

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Avans Taleplerim</h2>
+</div>
+
+<!-- Yeni İş Avansı Talebi -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-success text-white">
+        <h5 class="card-title mb-0">Yeni İş Avansı Talebi</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="avans_talep" value="1">
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success w-100">Talep Gönder</button>
+        </form>
+    </div>
+</div>
+
+<!-- Avans Talepleri -->
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Geçmiş Avans Talepleri</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Miktar</th>
+                        <th>Açıklama</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for talep in avans_talepleri %}
+                    <tr>
+                        <td>{{ talep.tarih }}</td>
+                        <td>{{ talep.miktar }} TL</td>
+                        <td>{{ talep.aciklama|truncatechars:40 }}</td>
+                        <td>
+                            {% if talep.durum == 'Bekliyor' %}
+                            <span class="badge bg-warning text-dark">{{ talep.durum }}</span>
+                            {% elif talep.durum == 'Onaylandı' %}
+                            <span class="badge bg-success">{{ talep.durum }}</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ talep.durum }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">Henüz avans talebiniz bulunmuyor.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

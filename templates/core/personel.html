@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load core_tags %}
+
 
 {% block content %}
 <div class="row">
@@ -42,13 +44,15 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         <strong>Avans Bakiyesi:</strong>
                         {% if personel.guncel_avans_borcu > 0 %}
-                        <span class="badge bg-danger">{{ personel.guncel_avans_borcu }} TL Borç</span>
+                        <span class="badge bg-danger">{{ personel.guncel_avans_borcu }} TL</span>
                         {% elif personel.guncel_avans_borcu < 0 %} <span class="badge bg-success">{{
-                            personel.guncel_avans_borcu|abs }} TL Alacak</span>
+                            personel.guncel_avans_borcu|abs }} TL</span>
                             {% else %}
                             <span class="badge bg-secondary">0 TL</span>
                             {% endif %}
                     </li>
+
+
                     <li class="list-group-item text-center">
                         <a href="{% url 'sifre_degistir' %}" class="btn btn-outline-warning btn-sm">Şifre Değiştir</a>
                     </li>
@@ -76,117 +80,68 @@
             </div>
         </div>
 
-        <!-- Yaklaşan İzinler -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                <h5 class="card-title mb-0">Yaklaşan İzinler</h5>
-            </div>
-            <div class="card-body">
-                <p class="text-muted text-center mb-0">Yaklaşan izin bulunmuyor.</p>
-            </div>
-        </div>
+
     </div>
 
     <!-- SAĞ TARAF -->
     <div class="col-md-8">
-        <!-- Yeni İzin Talebi -->
+
+        <!-- Zimmetlerim -->
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-warning text-dark">
-                <h5 class="card-title mb-0">Yeni İzin Talebi</h5>
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Zimmetlerim</h5>
             </div>
             <div class="card-body">
-                {% if personel.kalan_izin < 0 %} <div class="alert alert-warning mb-3">
-                    <strong>Dikkat!</strong> Mevcut izin hakkınız eksi durumda: <strong>{{ personel.kalan_izin }}
-                        gün</strong>
-            </div>
-            {% else %}
-            <div class="alert alert-info mb-3">
-                <strong>Mevcut İzin Hakkınız:</strong> {{ personel.kalan_izin }} gün
-            </div>
-            {% endif %}
-            <form method="post" action="{% url 'izin_talep_et' %}">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Başlangıç Tarihi</label>
-                            <input type="date" name="baslangic_tarihi" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Bitiş Tarihi</label>
-                            <input type="date" name="bitis_tarihi" class="form-control" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Açıklama</label>
-                    <textarea name="aciklama" class="form-control" rows="2"
-                        placeholder="İzin sebebini belirtiniz"></textarea>
-                </div>
-                <button type="submit" class="btn btn-warning text-dark w-100">İzin Talep Et</button>
-            </form>
-        </div>
-    </div>
+                {% if personel %}
+                <h5 class="mb-3">{{ personel.user.get_full_name }} - Zimmet Listesi</h5>
 
-    <!-- Yeni Masraf Talebi -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-header text-white" style="background-color: #6f42c1;">
-            <h5 class="card-title mb-0">Yeni Masraf Talebi</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Malzeme</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" class="text-center">Henuz zimmet kaydi bulunmuyor.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-warning">Personel bilgisi bulunamadi.</div>
+                {% endif %}
+            </div>
         </div>
-        <div class="card-body">
-            <form method="post" action="{% url 'masraf_talep_et' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Masraf Tutarı (TL) *</label>
-                            <input type="number" name="miktar" class="form-control" step="0.01" min="0.01" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Masraf Tarihi *</label>
-                            <input type="date" name="tarih" class="form-control" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Açıklama *</label>
-                    <textarea name="aciklama" class="form-control" rows="2" placeholder="Masrafın açıklamasını giriniz"
-                        required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Fiş/Fatura Resmi * (Zorunlu)</label>
-                    <input type="file" name="fis_fatura" class="form-control" accept="image/*" required>
-                    <small class="text-muted">Fiş veya fatura resmi yüklemeniz zorunludur.</small>
-                </div>
-                <button type="submit" class="btn btn-primary w-100" style="background-color: #6f42c1;">Masraf Talep
-                    Et</button>
-            </form>
-        </div>
-    </div>
 
-    <!-- Yeni İş Avansı Talebi -->
-    <div class="card shadow-sm">
-        <div class="card-header bg-success text-white">
-            <h5 class="card-title mb-0">Yeni İş Avansı Talebi</h5>
-        </div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="avans_talep" value="1">
-                {% for field in form %}
-                <div class="mb-3">
-                    <label class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-success w-100">Talep Gönder</button>
-            </form>
+        <!-- Eğitimlerim -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Eğitimlerim</h5>
+            </div>
+            <div class="card-body">
+                {% if personel %}
+                <h5 class="mb-3">{{ personel.user.get_full_name }} - Eğitim Listesi</h5>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Eğitim Adi</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" class="text-center">Henuz eğitim kaydi bulunmuyor.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-warning">Personel bilgisi bulunamadi.</div>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
-</div>
-{% endblock %}
+    {% endblock %}
