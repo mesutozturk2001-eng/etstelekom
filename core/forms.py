@@ -21,7 +21,7 @@ class PersonelForm(forms.ModelForm):
     class Meta:
         model = Personel
         # izin_hakki otomatik hesaplanır, elle girilemez
-        fields = ['tc_no', 'telefon', 'pozisyon', 'profil_tipi', 'adres', 'dogum_tarihi', 'ise_giris_tarihi', 'izin_hakki', 'kalan_izin', 'guncel_avans_borcu', 'first_name', 'last_name']
+        fields = ['tc_no', 'telefon', 'pozisyon', 'profil_tipi', 'adres', 'dogum_tarihi', 'ise_giris_tarihi', 'izin_hakki', 'kalan_izin', 'guncel_avans_borcu', 'first_name', 'last_name', 'yonetici']
         widgets = {
             'tc_no': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'TC Kimlik No'}),
             'telefon': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefon'}),
@@ -33,6 +33,7 @@ class PersonelForm(forms.ModelForm):
             'izin_hakki': forms.NumberInput(attrs={'class': 'form-control', 'value': '14'}),
             'kalan_izin': forms.NumberInput(attrs={'class': 'form-control', 'value': '0'}),
             'guncel_avans_borcu': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'yonetici': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Yönetici Seç'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -43,6 +44,13 @@ class PersonelForm(forms.ModelForm):
         self.fields['telefon'].required = False
         # İzin hakkı zorunlu değil
         self.fields['izin_hakki'].required = False
+        # Yönetici alanı için sorgu: Aktif personelleri listele
+        if self.instance and self.instance.pk:
+            self.fields['yonetici'].queryset = Personel.objects.filter(aktif=True).exclude(pk=self.instance.pk)
+        else:
+            self.fields['yonetici'].queryset = Personel.objects.filter(aktif=True)
+        self.fields['yonetici'].required = False
+        self.fields['yonetici'].empty_label = 'Yönetici Seç (Opsiyonel)'
     
     def clean_dogum_tarihi(self):
         dogum_tarihi = self.cleaned_data.get('dogum_tarihi')

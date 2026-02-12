@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Personel Arşivle{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Personel Arşivle</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>{{ personel.user.get_full_name }}</strong> adlı personeli arşivlemek istediğinize emin
+                        misiniz?
+                        Bu işlem geri alınabilir, personel aktif personel listesinden çıkarılacak ancak tüm verileri
+                        korunacaktır.
+                    </p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="arsivlenme_nedeni" class="font-weight-bold">Arşivlenme Nedeni:</label>
+                            <textarea class="form-control" id="arsivlenme_nedeni" name="arsivlenme_nedeni" rows="3"
+                                placeholder="Personeli neden arşivliyorsunuz? (Opsiyonel)"></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'ik_paneli' %}" class="btn btn-secondary">İptal</a>
+                            <button type="submit" class="btn btn-danger">Arşivle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

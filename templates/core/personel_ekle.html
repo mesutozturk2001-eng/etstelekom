@@ -128,6 +128,14 @@
                         {% endif %}
                     </div>
 
+                    <div class="mb-4">
+                        <label class="form-label">{{ form.yonetici.label }}</label>
+                        {{ form.yonetici }}
+                        {% if form.yonetici.errors %}
+                        <div class="error-message">{{ form.yonetici.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
                     <div class="d-flex justify-content-between">
                         <a href="{% url 'ik_paneli' %}" class="btn btn-secondary">İptal</a>
                         <button type="submit" class="btn btn-success">Personeli Kaydet</button>

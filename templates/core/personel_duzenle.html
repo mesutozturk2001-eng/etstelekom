@@ -131,6 +131,16 @@
                         {% endif %}
                     </div>
 
+                    {% if request.user.personel.profil_tipi in 'Patron,Muhasebe' %}
+                    <div class="mb-4">
+                        <label class="form-label">{{ form.yonetici.label }}</label>
+                        {{ form.yonetici }}
+                        {% if form.yonetici.errors %}
+                        <div class="error-message">{{ form.yonetici.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
                     <div class="d-flex justify-content-between w-100">
                         <div>
                             <a href="{% url 'ik_paneli' %}" class="btn btn-secondary">İptal</a>

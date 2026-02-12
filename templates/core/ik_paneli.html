@@ -13,6 +13,9 @@
         <a href="{% url 'toplu_excel_indir' %}" class="btn btn-success">
             Toplu İndir (Excel)
         </a>
+        <a href="{% url 'arsivli_personeller' %}" class="btn btn-info">
+            <i class="fas fa-archive"></i> Arşivli Personeller
+        </a>
     </div>
 </div>
 
@@ -54,6 +57,7 @@
                         <th>Telefon</th>
                         <th>İzin Hakkı</th>
                         <th>Kalan İzin</th>
+                        <th>Yönetici</th>
                         <th>İşlemler</th>
                     </tr>
                 </thead>
@@ -73,39 +77,13 @@
                                 {{ p.kalan_izin }} gün
                                 {% endif %}
                         </td>
+                        <td>{% if p.yonetici %}{{ p.yonetici.user.get_full_name|upper }}{% else %}-{% endif %}</td>
                         <td>
                             <a href="{% url 'personel_duzenle' p.id %}"
                                 class="btn btn-sm btn-info text-white">Düzenle</a>
-                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal{{ p.id }}">
-                                Sil
-                            </button>
-
-                            <!-- Delete Modal -->
-                            <div class="modal fade" id="deleteModal{{ p.id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Personeli Sil</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>{{ p.user.get_full_name|upper }} personelini silmek istediğinize emin
-                                                misiniz?
-                                            </p>
-                                            <small class="text-danger">Bu işlem geri alınamaz!</small>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">İptal</button>
-                                            <form action="{% url 'personel_sil' p.id %}" method="post" class="d-inline">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-danger">Evet, Sil</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="{% url 'personel_arsivle' p.id %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-archive"></i> Arşivle
+                            </a>
                         </td>
                     </tr>
                     {% empty %}

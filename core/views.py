@@ -45,6 +45,16 @@ def is_patron(user):
         return False
 
 
+def is_yonetici(user):
+    """Kullanici yönetici profili mi kontrol eder"""
+    try:
+        personel = Personel.objects.get(user=user)
+        # Yönetici, kendisine bağlı personeli olan personel olabilir
+        return Personel.objects.filter(yonetici=personel).exists() or personel.profil_tipi == 'Muhasebe' or personel.profil_tipi == 'Patron' or user.is_staff
+    except Personel.DoesNotExist:
+        return False
+
+
 def get_user_profile(request):
     """Kullanicinin profil tipini dondurur"""
     if not request.user.is_authenticated:
@@ -112,7 +122,7 @@ def ik_paneli(request):
         
         query_lower = turkish_lower(query)
         
-        all_personeller = Personel.objects.all()
+        all_personeller = Personel.objects.filter(aktif=True)
         personeller = []
         for p in all_personeller:
             ad = turkish_lower(p.user.first_name)
@@ -122,7 +132,7 @@ def ik_paneli(request):
             if (query_lower in ad or query_lower in soyad or query in tc):
                 personeller.append(p)
     else:
-        personeller = Personel.objects.all()
+        personeller = Personel.objects.filter(aktif=True)
     
     return render(request, 'core/ik_paneli.html', {'personeller': personeller})
 
@@ -255,29 +265,55 @@ def borc_guncelle(request, personel_id):
     return redirect('muhasebe_paneli')
 
 @login_required
-@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_yonetici(u))
 def avans_islem(request, talep_id, islem):
     talep = get_object_or_404(AvansTalebi, id=talep_id)
+    
+    # Yönetici kontrolü: Sadece kendi personellerini onaylayabilir
+    if is_yonetici(request.user) and not (request.user.is_staff or is_muhasebe(request.user)):
+        try:
+            yonetici = Personel.objects.get(user=request.user)
+            if talep.personel.yonetici != yonetici:
+                messages.error(request, 'Bu talep sizin personeliniz değil.')
+                return redirect('ik_paneli')
+        except Personel.DoesNotExist:
+            messages.error(request, 'Yönetici bulunamadı.')
+            return redirect('ik_paneli')
+    
     if islem == 'onayla':
-        talep.durum = 'Onaylandi'
-        onceki_borc = talep.personel.guncel_avans_borcu
-        talep.personel.guncel_avans_borcu += talep.miktar
-        talep.personel.save()
-        
-        AvansHareketi.objects.create(
-            personel=talep.personel,
-            hareket_turu='ODEME',
-            miktar=talep.miktar,
-            onceki_borc=onceki_borc,
-            yeni_borc=talep.personel.guncel_avans_borcu,
-            aciklama=f'Avans talebi onaylandi: {talep.miktar} TL'
-        )
-        messages.success(request, 'Talep onaylandi ve borc kaydedildi.')
+        # Yönetici onayı ise
+        if is_yonetici(request.user) and not (request.user.is_staff or is_muhasebe(request.user)):
+            talep.durum = 'Yonetici Onaylandı'
+            messages.success(request, 'Talep yönetici tarafından onaylandı.')
+        # Muhasebe onayı ise
+        else:
+            talep.durum = 'Muhasebe Onaylandı'
+            onceki_borc = talep.personel.guncel_avans_borcu
+            talep.personel.guncel_avans_borcu += talep.miktar
+            talep.personel.save()
+            
+            AvansHareketi.objects.create(
+                personel=talep.personel,
+                hareket_turu='ODEME',
+                miktar=talep.miktar,
+                onceki_borc=onceki_borc,
+                yeni_borc=talep.personel.guncel_avans_borcu,
+                aciklama=f'Avans talebi onaylandi: {talep.miktar} TL'
+            )
+            messages.success(request, 'Talep muhasebe tarafından onaylandı ve borc kaydedildi.')
     elif islem == 'reddet':
         talep.durum = 'Reddedildi'
         messages.warning(request, 'Talep reddedildi.')
+        
     talep.save()
-    return redirect('muhasebe_paneli')
+    
+    # Yönlendirme: Yöneticiyse IK paneline, muhasebeyse muhasebe paneline
+    if is_muhasebe(request.user) or request.user.is_staff:
+        return redirect('muhasebe_paneli')
+    elif is_yonetici(request.user):
+        return redirect('ik_paneli')
+    else:
+        return redirect('index')
 
 @login_required
 @user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
@@ -396,13 +432,62 @@ def personel_duzenle(request, personel_id):
 
 @login_required
 @user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
-def personel_sil(request, personel_id):
+def personel_arsivle(request, personel_id):
     personel = get_object_or_404(Personel, id=personel_id)
-    user = personel.user
-    personel.delete()
-    user.delete()
-    messages.error(request, 'Personel silindi.')
-    return redirect('ik_paneli')
+    
+    if request.method == 'POST':
+        arsivlenme_nedeni = request.POST.get('arsivlenme_nedeni', '')
+        personel.aktif = False
+        personel.arsivlenme_nedeni = arsivlenme_nedeni
+        personel.arsivlenme_tarihi = datetime.now()
+        personel.save()
+        messages.success(request, 'Personel başarıyla arşivlendi.')
+        return redirect('ik_paneli')
+    
+    return render(request, 'core/personel_arsivle.html', {'personel': personel})
+
+@login_required
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
+def personel_aktiflestir(request, personel_id):
+    personel = get_object_or_404(Personel, id=personel_id)
+    personel.aktif = True
+    personel.arsivlenme_nedeni = ''
+    personel.arsivlenme_tarihi = None
+    personel.save()
+    messages.success(request, 'Personel başarıyla aktifleştirildi.')
+    return redirect('arsivli_personeller')
+
+@login_required
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
+def arsivli_personeller(request):
+    query = request.GET.get('q', '')
+    
+    if query:
+        def turkish_lower(s):
+            turkish_map = {
+                'I': 'i', 'I': 'i', 'G': 'g', 'U': 'u', 'S': 's', 'O': 'o', 'C': 'c',
+                'i': 'i', 'g': 'g', 'u': 'u', 's': 's', 'o': 'o', 'c': 'c'
+            }
+            result = ''
+            for char in s:
+                result += turkish_map.get(char, char.lower())
+            return result
+        
+        query_lower = turkish_lower(query)
+        
+        all_personeller = Personel.objects.filter(aktif=False)
+        personeller = []
+        for p in all_personeller:
+            ad = turkish_lower(p.user.first_name)
+            soyad = turkish_lower(p.user.last_name)
+            tc = p.tc_no
+            
+            if (query_lower in ad or query_lower in soyad or query in tc):
+                personeller.append(p)
+    else:
+        personeller = Personel.objects.filter(aktif=False)
+    
+    return render(request, 'core/arsivli_personeller.html', {'personeller': personeller})
 
 @login_required
 @user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
@@ -627,23 +712,57 @@ def izin_listesi(request):
     })
 
 @login_required
-@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u))
+@user_passes_test(lambda u: is_staff(u) or is_muhasebe(u) or is_yonetici(u))
 def izin_islem(request, talep_id, islem):
     """Izin talebini onayla veya reddet"""
     talep = get_object_or_404(IzinTalebi, id=talep_id)
     
+    # Yönetici kontrolü: Sadece kendi personellerini onaylayabilir
+    if is_yonetici(request.user) and not (request.user.is_staff or is_muhasebe(request.user)):
+        try:
+            yonetici = Personel.objects.get(user=request.user)
+            if talep.personel.yonetici != yonetici:
+                messages.error(request, 'Bu talep sizin personeliniz değil.')
+                return redirect('ik_paneli')
+        except Personel.DoesNotExist:
+            messages.error(request, 'Yönetici bulunamadı.')
+            return redirect('ik_paneli')
+    
     if islem == 'onayla':
-        talep.durum = 'Onaylandi'
-        messages.success(request, 'Izin talebi onaylandi.')
+        # Yönetici onayı ise
+        if is_yonetici(request.user) and not (request.user.is_staff or is_muhasebe(request.user)):
+            talep.durum = 'Yonetici Onaylandı'
+            messages.success(request, 'İzin talebi yönetici tarafından onaylandı.')
+        # Muhasebe onayı ise
+        else:
+            talep.durum = 'Muhasebe Onaylandı'
+            # İzin onaylandığında kalan izinden düş
+            if talep.pk:
+                old_inst = IzinTalebi.objects.get(pk=talep.pk)
+                if old_inst.durum != 'Muhasebe Onaylandı' and talep.durum == 'Muhasebe Onaylandı':
+                    talep.personel.kalan_izin -= talep.gun_sayisi
+                    talep.personel.save()
+            else:
+                if talep.durum == 'Muhasebe Onaylandı':
+                    talep.personel.kalan_izin -= talep.gun_sayisi
+                    talep.personel.save()
+            messages.success(request, 'İzin talebi muhasebe tarafından onaylandı.')
     elif islem == 'reddet':
         talep.durum = 'Reddedildi'
-        messages.warning(request, 'Izin talebi reddedildi.')
+        messages.warning(request, 'İzin talebi reddedildi.')
     elif islem == 'iptal':
         talep.durum = 'Iptal Edildi'
-        messages.info(request, 'Izin talebi iptal edildi.')
+        messages.info(request, 'İzin talebi iptal edildi.')
     
     talep.save()
-    return redirect('izin_listesi')
+    
+    # Yönlendirme: Yöneticiyse IK paneline, muhasebeyse muhasebe paneline
+    if is_muhasebe(request.user) or request.user.is_staff:
+        return redirect('izin_listesi')
+    elif is_yonetici(request.user):
+        return redirect('ik_paneli')
+    else:
+        return redirect('index')
 
 @login_required
 def izin_detay(request, talep_id):

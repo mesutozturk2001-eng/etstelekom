@@ -3,9 +3,14 @@
 {% block content %}
 <div class="row">
     <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
+        <div class="card shadow-sm {% if not personel.aktif %}border-danger{% endif %}">
+            <div class="card-header {% if not personel.aktif %}bg-danger{% else %}bg-primary{% endif %} text-white">
                 <h5 class="card-title mb-0">{{ personel.user.get_full_name|upper }}</h5>
+                {% if not personel.aktif %}
+                <span class="badge bg-light text-danger">Arşivli</span>
+                {% else %}
+                <span class="badge bg-light text-primary">Aktif</span>
+                {% endif %}
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
@@ -17,6 +22,18 @@
                         <strong>İşe Giriş:</strong>
                         <span>{{ personel.ise_giris_tarihi }}</span>
                     </li>
+                    {% if not personel.aktif %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                        <strong>Arşivlenme Tarihi:</strong>
+                        <span>{{ personel.arsivlenme_tarihi|date:"d.m.Y H:i" }}</span>
+                    </li>
+                    {% if personel.arsivlenme_nedeni %}
+                    <li class="list-group-item bg-light">
+                        <strong>Arşivlenme Nedeni:</strong>
+                        <p class="mt-1 mb-0">{{ personel.arsivlenme_nedeni }}</p>
+                    </li>
+                    {% endif %}
+                    {% endif %}
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         <strong>Kalan İzin:</strong>
                         <span

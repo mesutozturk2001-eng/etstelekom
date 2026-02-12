@@ -112,6 +112,10 @@ class Personel(models.Model):
     izin_hakki = models.IntegerField(default=14, verbose_name="Yıllık İzin Hakkı")
     kalan_izin = models.IntegerField(default=0, verbose_name="Kalan İzin Günü")
     guncel_avans_borcu = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Güncel Avans Borcu")
+    aktif = models.BooleanField(default=True, verbose_name="Aktif")
+    arsivlenme_nedeni = models.TextField(blank=True, default='', verbose_name="Arşivlenme Nedeni")
+    arsivlenme_tarihi = models.DateTimeField(null=True, blank=True, verbose_name="Arşivlenme Tarihi")
+    yonetici = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Yönetici")
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name} ({self.tc_no})"
@@ -125,7 +129,8 @@ class Personel(models.Model):
 class AvansTalebi(models.Model):
     DURUM_CHOICES = [
         ('Bekliyor', 'Bekliyor'),
-        ('Onaylandı', 'Onaylandı'),
+        ('Yonetici Onaylandı', 'Yönetici Onayladı'),
+        ('Muhasebe Onaylandı', 'Muhasebe Onayladı'),
         ('Reddedildi', 'Reddedildi'),
     ]
     personel = models.ForeignKey(Personel, on_delete=models.CASCADE)
@@ -179,7 +184,8 @@ class AvansHareketi(models.Model):
 class IzinTalebi(models.Model):
     DURUM_CHOICES = [
         ('Bekliyor', 'Bekliyor'),
-        ('Onaylandı', 'Onaylandı'),
+        ('Yonetici Onaylandı', 'Yönetici Onayladı'),
+        ('Muhasebe Onaylandı', 'Muhasebe Onayladı'),
         ('Reddedildi', 'Reddedildi'),
     ]
     personel = models.ForeignKey(Personel, on_delete=models.CASCADE)
@@ -216,7 +222,8 @@ class IzinTalebi(models.Model):
 class MasrafTalebi(models.Model):
     DURUM_CHOICES = [
         ('Bekliyor', 'Bekliyor'),
-        ('Onaylandı', 'Onaylandı'),
+        ('Yonetici Onaylandı', 'Yönetici Onayladı'),
+        ('Muhasebe Onaylandı', 'Muhasebe Onayladı'),
         ('Reddedildi', 'Reddedildi'),
     ]
     personel = models.ForeignKey(Personel, on_delete=models.CASCADE)
