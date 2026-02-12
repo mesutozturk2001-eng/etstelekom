@@ -1,0 +1,15 @@
+We can verify the IK Panel manually by:
+
+1. Opening a browser and navigating to http://localhost:8000/
+2. Logging in with username: 12345678901 and password: admin123
+3. Clicking on "IK Paneli" in the navigation
+4. Checking that the table includes a "Yönetici" column with the manager's name for each employee
+
+Expected result: The IK Panel should display all active employees with their respective managers' names. The manager
+field should be editable for Patron and Muhasebe users.
+
+Alternatively, we can use the following curl command to fetch the IK Panel HTML and verify the manager information is
+present:
+
+curl -v -X GET http://localhost:8000/ik-paneli/ --cookie "csrftoken=lpOJiOAFBHBAds2hXovPO7YwJ0ntBkNO;
+sessionid=1234567890abcdefghijklmnopqrstuvwxyz"
