@@ -52,10 +52,7 @@
                         <th>TC No</th>
                         <th>Ad Soyad</th>
                         <th>Pozisyon</th>
-                        <th>Doğum Tarihi</th>
-                        <th>İşe Giriş</th>
                         <th>Telefon</th>
-                        <th>İzin Hakkı</th>
                         <th>Kalan İzin</th>
                         <th>Yönetici</th>
                         <th>İşlemler</th>
@@ -67,10 +64,7 @@
                         <td>{{ p.tc_no }}</td>
                         <td>{{ p.user.get_full_name|upper }}</td>
                         <td>{{ p.pozisyon|default:'-' }}</td>
-                        <td>{{ p.dogum_tarihi|default:'-' }}</td>
-                        <td>{{ p.ise_giris_tarihi }}</td>
                         <td>{{ p.telefon }}</td>
-                        <td>{{ p.izin_hakki }}</td>
                         <td>
                             {% if p.kalan_izin < 0 %} <span class="text-danger fw-bold">{{ p.kalan_izin }} gün</span>
                                 {% else %}
@@ -79,16 +73,25 @@
                         </td>
                         <td>{% if p.yonetici %}{{ p.yonetici.user.get_full_name|upper }}{% else %}-{% endif %}</td>
                         <td>
-                            <a href="{% url 'personel_duzenle' p.id %}"
-                                class="btn btn-sm btn-info text-white">Düzenle</a>
-                            <a href="{% url 'personel_arsivle' p.id %}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-archive"></i> Arşivle
+                            <a href="{% url 'personel_detay' p.id %}" class="btn btn-sm btn-primary"
+                                title="Detay Göster"
+                                style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'personel_duzenle' p.id %}" class="btn btn-sm btn-info text-white"
+                                title="Düzenle"
+                                style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'personel_arsivle' p.id %}" class="btn btn-sm btn-warning" title="Arşivle"
+                                style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-archive"></i>
                             </a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="9" class="text-center text-muted py-4">Kayıtlı personel bulunamadı.</td>
+                        <td colspan="7" class="text-center text-muted py-4">Kayıtlı personel bulunamadı.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
